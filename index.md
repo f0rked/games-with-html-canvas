@@ -1,3 +1,7 @@
+---
+layout: main
+---
+
 # Juegos con HTML canvas y Javascript
 
 El desarrollo de videojuegos es una tarea al alcance de cualquiera. Para desarrollar videojuegos sencillos, como los que verás
