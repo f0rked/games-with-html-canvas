@@ -1,0 +1,10 @@
+- id: snake
+  name: Snake
+  link: tutorials/snake/
+  toolTip: Nuestro primer juego, mueve la serpiente por el tablero comiéndote todas las manzanas que aparezcan sin morderte a ti mismo.
+  order: 1
+  toc:
+    - name: Dibujando
+      link: part-01.html
+    - name: Introducir animación.
+      link: part-02.html

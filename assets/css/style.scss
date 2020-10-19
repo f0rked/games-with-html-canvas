@@ -33,3 +33,40 @@
 #content p {
   text-align: justify;
 }
+
+#toc {
+  flex: 1;
+  min-width: 200px;
+  padding-left: 20px;
+}
+
+.tutorial_toc {
+  font-size: 0.75em;
+}
+
+#toc_list li {
+  counter-increment: list;
+  list-style-type: none;
+  position: relative;
+}
+
+#toc_list li:before {
+  color: #b5e853;
+  content: counter(list) ".";
+  left: -36px;
+  position: absolute;
+  text-align: right;
+  width: 26px;
+}
+
+.highlighter-rouge pre {
+  max-width: 800px;
+}
+
+.highlighter-rouge pre {
+  font-size: 0.85em !important;
+}
+
+.game_example {
+  text-align: center;
+}

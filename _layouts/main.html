@@ -2,14 +2,14 @@
 layout: default
 ---
 
-    <div id="menu"><!--
-      <p>Aquí estoy otra vez jugando al gua con mis canicas de colores</p>
-      <p>Aquí estoy</p>
-      <p>Aquí estoy</p>
-      <p>Aquí estoy</p>
-      <p>Aquí estoy</p>
-      <p>Aquí estoy</p>
-      -->
+    <div id="menu">
+      <h3>Tutoriales disponibles</h3>
+      <ul>
+        {% assign ordered = site.data.tutorials | sort: "order" %}
+        {% for t in ordered %}
+        <li><a href="{{ t.link }}" title="{{ t.toolTip }}">{{ t.name }}</a></li>
+        {% endfor %}
+      </ul>
     </div>
 
     <div id="content">

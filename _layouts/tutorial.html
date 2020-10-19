@@ -1,0 +1,22 @@
+---
+layout: default
+---
+
+    <div id="content">
+      {{ content }}
+    </div>
+
+    <div id="toc">
+      {% assign results = site.data.tutorials | where: "id", page.id %}
+      {% assign tutorial = results[0] %}
+      <h2>{{ tutorial.name }}</h2>
+      <div class="tutorial_toc">
+        <p><a href="index.html">Index</a></p>
+        <ol id="toc_list">
+          {% for ch in tutorial.toc %}
+          <li><a href="{{ ch.link }}">{{ ch.name }}</a></li>
+          {% endfor %}
+        </ol>
+        <p><a href="/">./</a></p>
+      </div>
+    </div>
