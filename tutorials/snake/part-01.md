@@ -3,7 +3,7 @@
   id: snake
 ---
 
-## Dibujando en el canvas
+## Dibujando
 
 En esta primera parte vamos a crear el área del juego y a mostrar algo de contenido estático, algo sencillo para empezar. Para
 ello vamos a necesitar dos ficheros:
@@ -90,3 +90,30 @@ Diviértete cambiando los colores y dibujando más rectángulos, hasta que te fa
   <script type="application/javascript" src="assets/game-01.js"></script>
   <canvas id="canvas" width="700" height="350" style="background:#999">[Canvas not supported by your browser.]</canvas>
 </div>
+<div>&nbsp;</div>
+
+### Depuración
+
+Como dijimos anteriormente si hay algún error en el fichero de código Javascript en la pantalla sólo aparecerá un rectángulo
+gris, para poder encontrar cuál es el problema real debes depurar el código.
+
+Todos los navegadores proporcionan una consola que permite ver en tiempo de carga y ejecución los errores que se producen en el
+código, con la información allí mostrada podrás resolver cualquier problema que puedas encontrarte mientras estás desarrollando
+tus juegos. Estas son las instrucciones para poder activarla:
+
+Chrome
+: Presiona F12 o Ctrl + Shift + I y selecciona la pestaña "consola".
+
+Firefox
+: Presiona Ctrl + Shift + K y selecciona la pestaña "Consola web". Es recomendable deshabilitar todas las notificaciones excepto
+las de JS para que sea más fácil depurar el código.
+
+Internet Explorer
+: Presiona F12 y selecciona la pestaña "consola".
+
+Opera
+: Presiona Ctrl + Shift + I y selecciona la pestaña "consola".
+
+Safari
+: Presiona Ctrl + Shift + I y selecciona la pestaña "consola". Debes habilitar antes "Mostrar menú de desarrollo en la barra de
+menú" en la pestaña "Avanzados" de "Preferencias" para usar esta opción.
