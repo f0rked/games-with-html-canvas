@@ -8,15 +8,15 @@
 Un juego no es sólo dibujar, también tenemos que interactuar con otros elementos, en esta parte vamos a ver como podemos añadir
 movimiento en nuestro juego.
 
-En primer lugar vamos a añadir la declaración de dos nuevas variables, `x` e `y`. Añade al comienzo de nuestro fichero, tras las
-variables ya existentes, las siguientes líneas:
+En primer lugar vamos a añadir la declaración de dos nuevas variables, `x` e `y`. Añade al comienzo de nuestro fichero de código,
+tras las variables ya existentes, las siguientes líneas:
 
 ``` javascript
 let x = 50,
     y = 50;
 ```
 
-Luego modificamos nuestro función `paint` para limpiar la pantalla antes de volver a pintar, esto lo hacemos dibujando un
+Luego modificamos nuestra función `paint` para limpiar la pantalla antes de volver a pintar, esto lo hacemos dibujando un
 rectángulo del mismo tamaño que el lienzo. Por último dibujamos un cuadrado más pequeño en la posición definida mediante las
 variables `x` e `y`. En este ejemplo estamos "limpiando" con el color negro, pero puedes usar el color que más te guste (desde
 `#000000` hasta `#ffffff` en hexadecimal), [prueba distintos colores](https://www.w3schools.com/colors/colors_rgb.asp){:target="\_blank"}
@@ -46,12 +46,12 @@ function run() {
 
 En la primera línea de la función invocamos a `requestAnimationFrame`, una función del navegador que solicita el repintado de la
 ventana del navegador en el próximo ciclo de animación, y que recibe como parámetro una función a la que llama antes de efectuar
-el repintado. Generalmente suele funcionar a una frecuencia de 60 veces por segundo para pestañas activas. Para saber más al
-respecto consulta [RequestAnimationFrame](./part-07.html)
+el repintado. Generalmente los ciclos de animación suelen tener una frecuencia de 60 veces por segundo para pestañas activas. Para
+saber más al respecto consulta [RequestAnimationFrame](./part-07.html)
 
-En las siguientes líneas invocamos a las funciones `actions` y `paint`. La función `paint` ya la conocemos, la nueva función
+En las siguientes líneas invocamos a las funciones `actions` y `paint`. La función `paint` ya la conocemos, y la nueva función
 `actions` se encargará de realizar todas las acciones necesarias para modificar el estado de nuestro juego; en este caso vamos
-a mover nuestro cuadro hacia la derecha dos píxeles:
+a mover nuestro cuadro hacia la derecha dos píxeles cada vez:
 
 ``` javascript
 function actions() {
@@ -61,9 +61,9 @@ function actions() {
 
 Podríamos poner el código de las acciones en la función `paint`, pero esto facilitaría la aparición de errores difíciles de
 detectar. Lo recomendable es realizar primero todas las acciones y luego pintar el resultado de las mismas, además esta separación
-nos permite organizar mejór el código de cara a posteriores mantenimientos.
+nos permite organizar mejor el código de cara a posteriores mantenimientos.
 
-Después de guardar el código y recargar la página `index.html` podrémos ver, si lo hicimos bien, como el cuadrado se desplaza
+Después de guardar el código y recargar la página `index.html` podremos ver, si lo hicimos bien, como el cuadrado se desplaza
 hacia la derecha hasta... desaparecer.
 
 Desaparecer, para no volver más. Si queremos verlo otra vez debemos recargar la página, pero volverá a hacer lo mismo. Para
@@ -77,6 +77,7 @@ líneas al final de la función `actions`:
 
 De esta manera, cuando el valor de `x` supere el ancho del lienzo, volveremos a posicionarlo en el extremo opuesto del mismo.
 
+Et voilà...
 
 ## Código final
 

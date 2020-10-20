@@ -34,8 +34,8 @@ Comencemos creando un fichero index.html con el siguiente contenido:
 ```
 
 No vamos a detenernos a explicar el código HTML ya que no es necesario para comprender el desarrollo de videojuegos, tan sólo
-digamos que el código anterior es lo básico para mostrar una página web donde mostrar el juego (si quieres aprender más sobre
-HTML mira la sección de referencias en la home). Sólo hay dos líneas importantes que debes comprender:
+digamos que el código anterior es una página web básica donde mostrar el juego (si quieres aprender más sobre HTML mira la
+sección de referencias en la home). Sólo hay dos líneas importantes que debes comprender:
 
 ``` html
 <script type="application/javascript" src="game.js"></script>
@@ -66,16 +66,17 @@ en él el siguiente contenido:
 
 Vamos a analizar el código poco a poco para entenderlo. Al principio declaramos las variables donde almacenaremos el nombre del
 lienzo (la traducción de canvas en español) que vamos a usar, el propio lienzo y su contexto gráfico 2D, que es la herramienta
-que usaremos para dibujar. Inicialmente no tendrán valor asignado.
+que usaremos para dibujar. Las dos últimas, inicialmente, no tendrán valor asignado.
 
 Luego definimos la función `paint`, que usaremos para generar la imagen el el contexto gráfico 2D recibido. Primero seleccionamos
 el color que queremos usar (`#f00`) y luego dibujamos un rectángulo en la posición *x = 50*, *x = 50* (el origen de coordenadas
-está en la esquina superior izquierda del lienzo), con 100px de ancho y 60px de alto. Después usaremos el color `0f0` para
+está en la esquina superior izquierda del lienzo), con 100px de ancho y 60px de alto. Después usaremos el color `#0f0` para
 rellenar el interiór del rectángulo.
 
 La función `init` obtiene la referencia del lienzo usando su `id`, que almacenamos en una variable al inicio del código con el
-valor que usamos en la página HTML, y del contexto gráfico y las almacena en las variables que definimos al inicio del código.
-En la última línea de la función llamamos a nuestra función `paint` pasándole el contexto del lienzo para dibujar en él.
+mismo valor que usamos en el atributo `id` del elemento `canvas` en la página HTML, y del contexto gráfico y las almacena en las
+variables que definimos al inicio del código. En la última línea de la función llamamos a nuestra función `paint` pasándole el
+contexto del lienzo para dibujar en él.
 
 Por último usamos la función `addEventListener`, definida en el navegador, para registrar nuestra función `init` para que, cuando
 se termine de cargar la página, se ejecute. Es importante que retrasemos la ejecucíon hasta que la página se carge completamente
