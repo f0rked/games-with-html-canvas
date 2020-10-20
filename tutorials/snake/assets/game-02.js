@@ -16,7 +16,7 @@ function actions() {
   x += 2;
 
   if (x > canvas.width) {
-      x = 0;
+    x = 0;
   }
 }
 
@@ -33,4 +33,4 @@ function init() {
   run();
 }
 
- window.addEventListener('load', init, false);
+window.addEventListener('load', init, false);
