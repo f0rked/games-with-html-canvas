@@ -3,7 +3,7 @@
   id: snake
 ---
 
-## Dibujando
+## Dibujar
 
 En esta primera parte vamos a crear el área del juego y a mostrar algo de contenido estático, algo sencillo para empezar. Para
 ello vamos a necesitar dos ficheros:
@@ -34,8 +34,8 @@ Comencemos creando un fichero index.html con el siguiente contenido:
 ```
 
 No vamos a detenernos a explicar el código HTML ya que no es necesario para comprender el desarrollo de videojuegos, tan sólo
-digamos que el código anterior es lo básico para mostrar una página web donde mostrar el juego. Sólo hay dos líneas importantes
-que debes comprender:
+digamos que el código anterior es lo básico para mostrar una página web donde mostrar el juego (si quieres aprender más sobre
+HTML mira la sección de referencias en la home). Sólo hay dos líneas importantes que debes comprender:
 
 ``` html
 <script type="application/javascript" src="game.js"></script>

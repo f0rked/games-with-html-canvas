@@ -4,7 +4,9 @@
   toolTip: Nuestro primer juego, mueve la serpiente por el tablero comiéndote todas las manzanas que aparezcan sin morderte a ti mismo.
   order: 1
   toc:
-    - name: Dibujando
+    - name: Dibujar
       link: part-01.html
-    - name: Introducir animación.
+    - name: Introducir animación
       link: part-02.html
+    - name: Controlar el movimiento
+      link: part-03.html
