@@ -13,7 +13,7 @@ el extremo contrario; en la otra el tablero está limitado en sus extremos, con 
 Este es el resultado final:
 
 <div class="game_example">
-  <script type="application/javascript" src="assets/game-02.js"></script>
+  <script type="application/javascript" src="assets/game-03.js"></script>
   <canvas id="canvas" width="700" height="350" style="background:#999">[Canvas not supported by your browser.]</canvas>
 </div>
 

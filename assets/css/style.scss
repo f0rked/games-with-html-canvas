@@ -30,7 +30,7 @@
   flex: 3;
 }
 
-#content p {
+#content p, #content li {
   text-align: justify;
 }
 
@@ -44,13 +44,13 @@
   font-size: 0.75em;
 }
 
-#toc_list li {
+ol li, {
   counter-increment: list;
   list-style-type: none;
   position: relative;
 }
 
-#toc_list li:before {
+ol li:before {
   color: #b5e853;
   content: counter(list) ".";
   left: -36px;
