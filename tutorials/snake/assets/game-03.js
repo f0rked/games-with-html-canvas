@@ -3,9 +3,9 @@ const KEY_LEFT = "ArrowLeft",
       KEY_RIGHT = "ArrowRight",
       KEY_DOWN = "ArrowDown";
 const MOVING_UP = 0,
-      MOVING_LEFT = 1,
-      MOVING_RIGHT = 2,
-      MOVING_DOWN = 3;
+      MOVING_RIGHT = 1,
+      MOVING_DOWN = 2,
+      MOVING_LEFT = 3;
 const KEY_ENTER = "Enter";
 
 let canvasName = 'canvas',
@@ -30,6 +30,7 @@ function paint(ctx) {
 
   // Draw pause caption
   if (pause) {
+    ctx.fillStyle = '#ffffff';
     ctx.textAlign = 'center';
     ctx.fillText('PAUSE', canvas.width / 2, canvas.height / 2);
     ctx.textAlign = 'left';
@@ -41,14 +42,14 @@ function actions() {
   if (!pause) {
     // Check direction
     switch (lastPressed) {
-      case KEY_LEFT: dir = MOVING_LEFT; break;
-      case KEY_UP: dir = MOVING_UP; break;
-      case KEY_RIGHT: dir = MOVING_RIGHT; break;
-      case KEY_DOWN: dir = MOVING_DOWN; break;
+      case KEY_LEFT: movingDirection = MOVING_LEFT; break;
+      case KEY_UP: movingDirection = MOVING_UP; break;
+      case KEY_RIGHT: movingDirection = MOVING_RIGHT; break;
+      case KEY_DOWN: movingDirection = MOVING_DOWN; break;
     }
 
     // Move rect
-    switch (dir) {
+    switch (movingDirection) {
       case MOVING_UP: y -= 10; break;
       case MOVING_RIGHT: x += 10; break;
       case MOVING_DOWN: y += 10; break;

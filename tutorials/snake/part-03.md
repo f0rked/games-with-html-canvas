@@ -68,9 +68,9 @@ los demás valores. Luego creamos unas constantes con estos valores:
 
 ``` javascript
 const MOVING_UP = 0,
-      MOVING_LEFT = 1,
-      MOVING_RIGHT = 2,
-      MOVING_DOWN = 3;
+      MOVING_RIGHT = 1,
+      MOVING_DOWN = 2,
+      MOVING_LEFT = 3;
 ```
 
 A continuación vamos a separar la gestión del pintado y de las acciones. En el apartado anterior separamos el código en dos
@@ -102,10 +102,10 @@ primer lugar detectamos que tecla ha pulsado el jugador y fijamos la nueva direc
 ``` javascript
   // Check direction
   switch (lastPressed) {
-    case KEY_LEFT: dir = MOVING_LEFT; break;
-    case KEY_UP: dir = MOVING_UP; break;
-    case KEY_RIGHT: dir = MOVING_RIGHT; break;
-    case KEY_DOWN: dir = MOVING_DOWN; break;
+    case KEY_LEFT: movingDirection = MOVING_LEFT; break;
+    case KEY_UP: movingDirection = MOVING_UP; break;
+    case KEY_RIGHT: movingDirection = MOVING_RIGHT; break;
+    case KEY_DOWN: movingDirection = MOVING_DOWN; break;
   }
 ```
 
@@ -113,7 +113,7 @@ En segundo lugar calculamos la nueva posición en función de la dirección del 
 
 ``` javascript
   // Move rect
-  switch (dir) {
+  switch (movingDirection) {
     case MOVING_UP: y -= 10; break;
     case MOVING_RIGHT: x += 10; break;
     case MOVING_DOWN: y += 10; break;
@@ -188,6 +188,7 @@ Por último añadimos al final de la función `paint` el código para que se mue
 ``` javascript
   // Draw pause caption
   if (pause) {
+    ctx.fillStyle = '#ffffff';
     ctx.textAlign = 'center';
     ctx.fillText('PAUSE', canvas.width / 2, canvas.height / 2);
     ctx.textAlign = 'left';
