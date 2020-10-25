@@ -11,6 +11,11 @@ de animación, ...), pero estos tutoriales son tan sólo para divertirnos y cono
 Estos fundamentos aplican a todos los tipos de videojuegos y lo que aprendas aquí te servirá en el futuro si decides seguir con
 el desarrollo de videojuegos.
 
+Los aspectos más importantes a la hora de elaborar un videojuego son la *jugabilidad* y el *interface*. La jugabilidad hace
+referencia a cómo de fácil es para el usuario aprender a jugar e interactuar con el juego, así como la capacidad de mantenerlo
+entretenido cuando lo usa. El interfaz del juego, por otro lado, hace referencia a cómo se comunica el juego con el usuario, lo
+atractivo de la parte visual y auditiva, lo que lo anima a jugar. No se pueden descuidar ninguno de los dos aspectos.
+
 Crear estos tutoriales también ha sido una experiencia de aprendizaje para mí, sólo espero que los disfrutes y que te sirvan para
 aprender de una manera amena.
 
