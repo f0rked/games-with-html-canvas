@@ -42,7 +42,7 @@ function Rectangle(x, y, color, width, height) {
     if (ctx == null) {
       window.console.warn('Missing parameters on function draw');
     } else {
-      ctx.fillStyle = color;
+      ctx.fillStyle = this.color;
       ctx.fillRect(this.x, this.y, this.width, this.height);
     }
   };
