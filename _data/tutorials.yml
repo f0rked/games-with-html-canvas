@@ -16,3 +16,5 @@
       link: part-05.html
     - name: Optimizaciones de Javascript
       link: part-06.html
+    - name: RequestAnimationFrame
+      link: part-07.html
