@@ -2,14 +2,16 @@
 layout: default
 ---
 
-    <div id="menu">
-      <h3>Tutoriales disponibles</h3>
-      <ul>
-        {% assign ordered = site.data.tutorials | sort: "order" %}
-        {% for t in ordered %}
-        <li><a href="{{ t.link }}" title="{{ t.toolTip }}">{{ t.name }}</a></li>
-        {% endfor %}
-      </ul>
+    <div id="left_menu">
+      <div class="menu_holder">
+        <h3>Tutoriales disponibles</h3>
+        <ul>
+          {% assign ordered = site.data.tutorials | sort: "order" %}
+          {% for t in ordered %}
+          <li><a href="{{ t.link }}" title="{{ t.toolTip }}">{{ t.name }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
     </div>
 
     <div id="content">
