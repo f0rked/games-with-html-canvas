@@ -3,7 +3,7 @@
   id: snake
 ---
 
-# Optimizaciones de Javascript
+## Optimizaciones de Javascript
 
 Aunque durante este tutorial hemos estado usando el lenguaje Javascript los conceptos estudiados son independientes del lenguaje
 usado, con lo que puedes cambiar a cualquier otro lenguaje para desarrollar videojuegos. Nosotros seguiremos, no obstante, usando
@@ -20,7 +20,7 @@ En esta sección vamos a realizar una serie de cambios en el código que aprovec
 de Javascript. El [la página principal de este sitio]({{ "/#references" | relative_url }}) tienes disponibles enlaces a información
 más detallada.
 
-## Encapsulación de código
+### Encapsulación de código
 
 Una de las principales características de Javascript es que todos los scripts son globales, esto quiere decir que comparten el
 scope (el ámbito en el que se definen nombres del programa), con lo que un script podría sobreescribir el valor de una variable
@@ -53,7 +53,7 @@ nombres que definimos como argumentos (`undefined` en Javascript es una variable
 uno), así si alguien los modifica nosotros no nos vemos afectados; al pasar como parámetros en la invocación los objetos globales
 tenemos una copia de los objetos globales, pero sin embargo `undefined` tiene el valor "*no definido*" que cabría esperar.
 
-## Modo estricto
+### Modo estricto
 
 La evolución de Javascript ha ido sustituyendo prácticas antiguas que han ido cayendo en desuso, pero al mismo tiempo ha tenido
 que mantener compatibilidad con las mismas para no romper desarrollos ya existentes. Los navegadores no tienen manera de saber
@@ -75,7 +75,7 @@ el uso de `var`, pero se desaconseja su uso por los motivos ya mencionados.
 Para poder eliminar todos los errores debes usar let en la definición de las variables contador de todos los bucles `for`, es
 decir, sustituir `for (i = 0;` por `for (let i = 0;` (Este error ha sido algo premeditado para resolverlo en este punto).
 
-## Verificar recursos multimedia
+### Verificar recursos multimedia
 
 En nuestro juego usamos varios recursos multimedia (imágenes y audio), en el caso de las imágenes usamos una comparación contra
 `null` para decidir si tenemos pintamos la imagen o si usamos un color. Esto no es del todo correcto, ya que se pueden producir
@@ -101,7 +101,7 @@ si es mayor que `0` significa que la imagen está completa. Debemos cambiar el c
 
 En el caso del audio la verificación consistiría en validar la siguiente condición `(audio != null && audio.readyState >= HAVE_CURRENT_DATA)`.
 
-## Compatibilidad de audio
+### Compatibilidad de audio
 
 Distintos navegadores tienen distintas capacidades y soportan distintos formatos de archivos multimedia, por ejemplo *Internet
 Explorer* y *Safari* solo admiten formato mp3 y mp4 (m4a/aac), así que es una buena práctica incluir estas validaciones para que
@@ -122,7 +122,7 @@ function initCompatibleAudio() {
 }
 ```
 
-## Comparadores estrictos
+### Comparadores estrictos
 
 Javascript permite hacer comparaciones entre valores equivalentes que no sean estrictamente idénticos (haciendo conversiones de
 manera automática), esto dotó de versatilidad durante mucho tiempo para el desarrollo web, pero ha causado conflictos cuando se
@@ -133,7 +133,7 @@ Para saber más acerca de la equivalencia de valores con operadores no estrictos
 Para evitar posibles conflictos en el código la recomendación es usar siempre los comparadores estrictos salvo que se busque
 alguna característica de los no estrictos, como comparación con null o 0 para obtener falso, p.ej.
 
-## Undefined versus null
+### Undefined versus null
 
 En Javascript `undefined` es toda variable que ha sido declarada pero a la que no se le ha asignado valor, mientras que `null` es
 un valor que se puede asignar a una variable para indicar que está *"vacia"*. Javascript nunca asigna el valor `null` a una variable.
@@ -143,7 +143,7 @@ mientras que con un comparador tradicional será `true`.
 
 Cabe destacar que `undefined`, más allá de un concepto es una variable, a la que se le puede asignar un valor, cuando comparamos cualquier variable con `undefined` estamos comparando los valores de esa variable y de la variable `undefined`. Si asignamos otro valor a `undefined`, empezarán a pasar cosas extrañas en los programas.
 
-## Uso de prototipos
+### Uso de prototipos
 
 JavaScript no posee *"clases"*, al menos no como las entendemos en los lenguajes orientados a objetos tradicionales (como Java,
 C++, ...), sólo tiene objetos, que son una agrupación de atributos y funciones definidos mediante una función *"constructor"*
@@ -244,7 +244,7 @@ En este segundo caso lo que estamos haciendo es sustituir completamente el *[[Pr
 
 Para nuestro juego es seguro usarlo.
 
-## Calidad de código con JSLint
+### Calidad de código con JSLint
 
 [JSLint](http://www.jslint.com/){:target="\_blank"} es una herramienta que pertenece a la familia de los *"linters"*, herramientas orientadas a la verificación de la correción del código y a la recomendación de buenas prácticas para el mismo sea legible y sencillo de comprender. Estos aspectos son especialmente importantes en proyectos grandess o colaborativos, por lo que resulta una buena práctica seguir estas recomendaciones desde el comienzo. Algunas herramientas de desarrollo web, como [Brackets](http://brackets.io/){:target="\_blank"}, ya lo incorporan por defecto.
 

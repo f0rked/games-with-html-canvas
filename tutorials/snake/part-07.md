@@ -3,7 +3,7 @@
   id: snake
 ---
 
-# RequestAnimationFrame
+## RequestAnimationFrame
 
 En el pasado, para crear temporizadores, sólo existía la función `setTimeout`. Esta función ha servido durante mucho tiempo para
 la ejecución programada de toda clase de acciones en páginas web, pero no está diseñada para implementar animaciones, que requieren
@@ -27,7 +27,7 @@ function run() {
 
 `requestAnimationFrame(run)` es equivalente a `setTimeout(run,17)`, pero de forma optimizada.
 
-## Soporte para navegadores antiguos
+### Soporte para navegadores antiguos
 
 Aunque prácticamente todos los navegadores modernos ya tienen esta función, hay veces que es necesario dar soporte a otros
 navegadores antiguos o navegadores que no dan soporte a alguna función.
@@ -53,7 +53,7 @@ también fallamos con esta usamos una que seguro que existirá y que hemos visto
 parecida. Como ves lo que devolvemos es una función anónima que recibe como parámetro la función a llamar y que invoca a
 `setTimeout` con la función recibida y el tiempo equivalente.
 
-## Calculo de cuadros por segundo (fps)
+### Calculo de cuadros por segundo (fps)
 
 A continuación os mostramos un objeto que nos permite calcular los fps (frames per second) o cuadros por segundo de los que es
 capaz nuestra computadora:
@@ -95,7 +95,7 @@ nuestro objeto para mostrar en el lienzo los fps:
   <canvas id="canvas" width="700" height="350" style="background:#999">[Canvas not supported by your browser.]</canvas>
 </div>
 
-## Regulando el tiempo entre dispositivos
+### Regulando el tiempo entre dispositivos
 
 Debido a la diferencia de capacidades entre dispositivos `requestAnimationFrame` no es consistente entre ellos, su tiempo de
 actualización es mayor en dispositivos de menor potencia, lo que hace los juegos más lentos en unos dispositivos que en otros.
@@ -103,7 +103,7 @@ Para evitar este problema, es necesario un mecanismo para homogeneizar la frecue
 
 Existen varias formas, veamos las dos más conocidas y eficientes:
 
-### *requestAnimationFrame* para pintar, *setTimeout* para cálculo de acciones
+#### *requestAnimationFrame* para pintar, *setTimeout* para cálculo de acciones
 
 La primera forma es separar el pintado del cálculo a de acciones de manera que cada una se ejecute a su propio ritmo optimizando
 los tiempos de cada una.
@@ -135,7 +135,7 @@ estos datos pueden no corresponder y generarse errores aleatorios.
 - El cálculo de acciones sigue consumiendo CPU si el juego pasa a segundo plano, aunque puede habilitarse un mecanismo para
 detener el timer.
 
-### Usar incrementos de tiempo
+#### Usar incrementos de tiempo
 
 Es el método más efectivo y, además, relativamente sencillo de implementar. Consiste en desplazar los objetos la parte proporcional
 correspondiente al tiempo transcurrido desde la última vez, de esta manera garantizamos que los objetos se mueven siempre a la

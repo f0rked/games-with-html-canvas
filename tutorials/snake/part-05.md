@@ -3,7 +3,7 @@
   id: snake
 ---
 
-# El juego terminado
+## El juego terminado
 
 Ya tenemos las bases necesarias para terminar el juego de la serpiente. Ahora hay que retocar ciertos detalles y conseguir una
 versión del juego que sea funcional, posteriormente seguiremos añadiendo mejoras hasta conseguir un juego completamente operativo
@@ -110,7 +110,7 @@ de teclas por:
 Un sólo `;` significa la instrucción vacía, no hacer nada, así que sólo registramos la tecla cuando la orden no sea la opuesta a
 la actual.
 
-## Multimedia
+### Multimedia
 
 Ahora que ya tenemos toda la funcionalidad implementada vamos a introducir contenido multimedia. Como ya comentamos al principio,
 en un juego, tanto o más importante que la jugabilidad (la trama del juego, lo fácil que es manejarlo) es el interfaz (aspecto
@@ -218,7 +218,7 @@ e incluimos una llamada al método `play` en el momento adecuado:
   }
 ```
 
-## Recursos Multimedia {#resources}
+### Recursos usados {#resources}
 
 A continuación te proporcionamos los recursos que hemos utilizado. Click derecho sobre cada enlace y "Guardar enlace como":
 

@@ -3,7 +3,7 @@
   id: snake
 ---
 
-# Interactuando con otros elementos
+## Interactuando con otros elementos
 
 Ya permitimos que el jugador interaccione con el juego, pero otro punto importante es que los distintos elementos del juego puedan
 interactuar entre sí. Las interacciones entre elementos del juego suelen ser, principalmente, contactos entre ellos. Para saber si
@@ -150,7 +150,7 @@ Por último sustituimos el antiguo mensaje de tecla pulsada por uno que nos mues
   ctx.fillText('Score: ' + score, 0, 20);
 ```
 
-## Interactuando con varios elementos iguales
+### Interactuando con varios elementos iguales
 
 Con el sistema actual, cuando el número de elementos con los que interactuar se incrementa, tratar con cada uno de manera
 independiente es excesivamente complicado, si además el número varía con el tiempo se convierte en algo casi imposible.

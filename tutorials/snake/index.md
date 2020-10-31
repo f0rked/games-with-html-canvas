@@ -2,7 +2,7 @@
   layout: tutorial
   id: snake
 ---
-### Snake
+## Snake
 En este primer tutorial vamos a programar un juego moderadamente simple, "Snake". El objetivo del juego es mover una serpiente
 por el tablero para comerse las manzanas que van apareciendo. El juego termina si la cabeza de la serpiente toca alguna parte
 del cuerpo de la misma.
