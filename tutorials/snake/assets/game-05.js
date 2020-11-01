@@ -182,7 +182,7 @@ function reset() {
 }
 
 function init() {
-  canvas = document.getElementById('canvas');
+  canvas = document.getElementById(canvasName);
   ctx = canvas.getContext('2d');
 
   // Create snake
