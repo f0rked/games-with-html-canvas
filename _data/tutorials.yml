@@ -24,3 +24,7 @@
       link: part-09.html
     - name: Almacenamiento local
       link: part-10.html
+    - name: Doble buffer
+      link: part-11.html
+    - name: Escalado y pixelado
+      link: part-12.html
