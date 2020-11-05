@@ -146,15 +146,15 @@ class MainMenuScene extends Scene {
     // Draw title
     ctx.fillStyle = '#ffffff';
     ctx.textAlign = 'center';
-    ctx.fillText('SNAKE', 150, 60);
-    ctx.fillText('Press Enter', 150, 90);
+    ctx.fillText('SNAKE', this.game.getWidth() / 2, this.game.getHeight() / 2);
+    ctx.fillText('Press Enter', this.game.getWidth() / 2, this.game.getHeight() / 2 + 30);
   }
 
   actions() {
     // Load next scene
-    if (this.lastPress === KEY_ENTER) {
+    if (this.game.lastPressed === KEY_ENTER) {
       Scene.ChangeScene(SCENE_GAME);
-      this.lastPress = null;
+      this.game.lastPressed = null;
     }
   }
 }
