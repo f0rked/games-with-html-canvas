@@ -16,6 +16,9 @@
         ASSET_FOOD = "assets/apple.png",
         ASSET_EAT = ["assets/eat.oga", "assets/eat.m4a"],
         ASSET_OVER = ["assets/over.oga", "assets/over.m4a"];
+  const SCENE_MAIN_MENU = "MainMenu",
+        SCENE_GAME = "SnakeGame",
+        SCENE_HIGH_SCORES = "HighScores";
 
   class Rectangle {
     constructor(x, y, color, width, height) {
@@ -152,13 +155,100 @@
     }
   }
 
-  class SnakeGame {
+  class HighScores {
+    constructor() {
+      this.list = (window.localStorage.getItem("scoreList")) ?
+                      window.localStorage.getItem("scoreList").split(",") : [];
+      this.last = (window.localStorage.getItem("lastScore")) ?
+                      window.localStorage.getItem("lastScore") : "";
+    }
 
-    constructor(canvas) {
+    registerScore(score) {
+      // Higher scores are in the lower indexes.
+      let i = 0;
+      while (this.list[i] > score && this.list.length > i)
+        i++;
 
-      this.canvas = canvas;
-      this.ctx = canvas.getContext('2d');
-      this.lastPressed = null;
+      // Insert new score and delete the lower one if length is exceeded.
+      this.list.splice(i, 0, score);
+      if (this.list.length > HighScores.MAX_LENGTH)
+        this.list.length = HighScores.MAX_LENGTH;
+
+      // Register the score's position.
+      if (i <= HighScores.MAX_LENGTH)
+        this.last = i;
+
+      window.localStorage.setItem("scoreList", this.list.join(","));
+      window.localStorage.setItem("lastScore", this.last);
+    }
+
+    static MAX_LENGTH = 10;
+  }
+
+  class Scene {
+
+    constructor(game, sceneName) {
+      this.game = game;
+      Scene.Script[sceneName] = this;
+    }
+
+    // Initialize the scene variables needed to start the execution
+    load() { }
+    // Paint the elements of the scene using the provided graphics context
+    paint(ctx) { throw new Error("Pending implementation"); }
+    // Compute the next state for the game
+    actions() { throw new Error("Pending implementation"); }
+
+    static Current;
+    static Script = {};
+
+    static ChangeScene(scene) {
+      if (Scene.Script[scene]) {
+        Scene.Current = scene;
+        Scene.Script[scene].load();
+      } else
+        throw new Error("No scene " + scene + " was found");
+    }
+
+    static paint(ctx) {
+      if (Scene.Script[Scene.Current])
+        Scene.Script[Scene.Current].paint(ctx);
+    }
+
+    static actions() {
+      if (Scene.Script[Scene.Current])
+        Scene.Script[Scene.Current].actions();
+    }
+  }
+
+  class MainMenuScene extends Scene {
+    constructor(game) { super(game, SCENE_MAIN_MENU); }
+
+    paint(ctx) {
+      // Clean canvas
+      ctx.fillStyle = '#003300';
+      ctx.fillRect(0, 0, this.game.getWidth(), this.game.getHeight());
+
+      // Draw title
+      ctx.fillStyle = '#ffffff';
+      ctx.textAlign = 'center';
+      ctx.fillText('SNAKE', this.game.getWidth() / 2, this.game.getHeight() / 2);
+      ctx.fillText('Press Enter', this.game.getWidth() / 2, this.game.getHeight() / 2 + 30);
+           }
+
+    actions() {
+      // Load next scene
+      if (this.game.lastPressed === KEY_ENTER) {
+        Scene.ChangeScene(SCENE_GAME);
+        this.game.lastPressed = null;
+      }
+    }
+  }
+
+  class GameScene extends Scene {
+    constructor(game) {
+      super(game, SCENE_GAME);
+
       this.movingDirection = MOVING_RIGHT;
       this.pause = true;
       this.score = 0;
@@ -174,9 +264,15 @@
       this.food = new Food(450, 280, '#ff0000', this.foodImg, 10);
     }
 
-    getWidth() { return this.canvas.width; }
+    load() {
+      this.score = 0;
+      this.movingDirection = MOVING_RIGHT;
 
-    getHeight() { return this.canvas.height; }
+      this.snake.reborn(300, 150, this.movingDirection);
+
+      this.food.relocate(this.game.getWidth(), this.game.getHeight());
+      this.gameover = false;
+    }
 
     isPaused() { return this.pause ; }
 
@@ -196,7 +292,7 @@
 
     paint(ctx) {
       ctx.fillStyle = '#000000';
-      ctx.fillRect(0, 0, this.getWidth(), this.getHeight());
+      ctx.fillRect(0, 0, this.game.getWidth(), this.game.getHeight());
 
       // Draw score
       ctx.fillStyle = '#ffffff';
@@ -211,9 +307,9 @@
       if (this.isPaused()) {
           ctx.textAlign = 'center';
           if (this.isGameover()) {
-              ctx.fillText('GAME OVER', this.getWidth() / 2, this.getHeight() / 2);
+              ctx.fillText('GAME OVER', this.game.getWidth() / 2, this.game.getHeight() / 2);
           } else {
-              ctx.fillText('PAUSE', this.getWidth() / 2, this.getHeight() / 2);
+              ctx.fillText('PAUSE', this.game.getWidth() / 2, this.game.getHeight() / 2);
           }
           ctx.textAlign = 'left';
       }
@@ -223,11 +319,11 @@
       if (!this.isPaused()) {
         // GameOver reset
         if (this.isGameover()) {
-          this.reset();
+          Scene.ChangeScene(SCENE_HIGH_SCORES);
         }
 
         // Check direction
-        switch (this.lastPressed) {
+        switch (this.game.lastPressed) {
           case KEY_LEFT: this.movingDirection = MOVING_LEFT; break;
           case KEY_UP: this.movingDirection = MOVING_UP; break;
           case KEY_RIGHT: this.movingDirection = MOVING_RIGHT; break;
@@ -235,12 +331,13 @@
         }
 
         // Move snake
-        this.snake.move(10, this.movingDirection, this.getWidth(), this.getHeight());
+        this.snake.move(10, this.movingDirection, this.game.getWidth(), this.game.getHeight());
 
         // Body Intersects
         if (this.snake.hasBitten()) {
             this.over.play();
             this.gameover = true;
+            this.game.hs.registerScore(this.score);
             this.pause = true;
         }
 
@@ -248,35 +345,74 @@
         if (this.snake.hasEaten(this.food)) {
           this.eat.play();
           this.score += 1; // also score++ or score = score + 1
-          this.food.relocate(this.getWidth(), this.getHeight());
+          this.food.relocate(this.game.getWidth(), this.game.getHeight());
         }
       }
 
       // Pause/Unpause
-      if (this.lastPressed == KEY_ENTER) {
+      if (this.game.lastPressed == KEY_ENTER) {
           this.pause = !this.pause;
-          this.lastPressed = null;
+          this.game.lastPressed = null;
+      }
+    }
+  }
+
+  class HighScoresScene extends Scene {
+    constructor(game) { super(game, SCENE_HIGH_SCORES); }
+
+    paint(ctx) {
+      // Clean canvas
+      ctx.fillStyle = '#003300';
+      ctx.fillRect(0, 0, this.game.getWidth(), this.game.getHeight());
+
+      // Draw title
+      ctx.fillStyle = '#ffffff';
+      ctx.textAlign = 'center';
+      ctx.fillText('HIGH SCORES', this.game.getWidth() / 2, 50);
+
+      let hs = this.game.hs;
+      for (let i = 0; i < hs.list.length; i++) {
+        let line = ((hs.last == i) ? "* " : "") + hs.list[i];
+        ctx.fillText(line, this.game.getWidth() / 2, 60 + i * 10);
       }
     }
 
-    reset() {
-      this.score = 0;
-      this.movingDirection = MOVING_RIGHT;
-
-      this.snake.reborn(300, 150, this.movingDirection);
-
-      this.food.relocate(this.getWidth(), this.getHeight());
-      this.gameover = false;
+    actions() {
+      // Load next scene
+      if (this.game.lastPressed === KEY_ENTER) {
+        Scene.ChangeScene(SCENE_GAME);
+        this.game.lastPressed = null;
+      }
     }
+  }
+
+  class SnakeGame {
+
+    constructor(canvas) {
+      this.canvas = canvas;
+      this.ctx = canvas.getContext('2d');
+      this.lastPressed = null;
+      this.hs = new HighScores();
+
+      new MainMenuScene(this),
+      new GameScene(this);
+      new HighScoresScene(this);
+
+      Scene.ChangeScene(SCENE_MAIN_MENU);
+    }
+
+    getWidth() { return this.canvas.width; }
+
+    getHeight() { return this.canvas.height; }
 
     repaint() {
       window.requestAnimationFrame(this.repaint.bind(this));
-      this.paint(this.ctx);
+      Scene.paint(this.ctx);
     }
 
     run() {
       setTimeout(this.run.bind(this), 50);
-      this.actions();
+      Scene.actions();
     }
 
     keyHandler() {
