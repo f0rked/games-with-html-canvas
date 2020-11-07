@@ -2,7 +2,7 @@
 (function (window, document, undefined) {
   "use strict";
 
-  const GAME_CONTAINER,
+  const GAME_CONTAINER = "canvas",
         KEY_LEFT = "ArrowLeft",
         KEY_UP = "ArrowUp",
         KEY_RIGHT = "ArrowRight",
