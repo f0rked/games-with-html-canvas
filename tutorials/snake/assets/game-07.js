@@ -1,6 +1,7 @@
-let canvasName = 'canvas',
-    canvas = null,
-    ctx = null;
+const GAME_CONTAINER = 'canvas';
+
+let canvas,
+    ctx;
 let x = 50,
     y = 50;
 
@@ -54,7 +55,7 @@ function run() {
 }
 
 function init() {
-  canvas = document.getElementById(canvasName);
+  canvas = document.getElementById(GAME_CONTAINER);
   ctx = canvas.getContext('2d');
 
   run();

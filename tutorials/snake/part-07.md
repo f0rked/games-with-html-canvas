@@ -84,7 +84,7 @@ window.fpsCalculator = {
 };
 ```
 Para ver este objeto en funcionamiento vamos a partir del código de la sección [Introducir animación](part-02.html) e introducimos
-nuestro objeto para mostrar en el lienzo los fps:
+nuestro objeto para mostrar en el juego los fps:
 
 ``` javascript
 {% include_relative assets/game-07.js %}
@@ -92,7 +92,7 @@ nuestro objeto para mostrar en el lienzo los fps:
 <div>&nbsp;</div>
 <div class="game_example">
   <script type="application/javascript" src="assets/game-07.js"></script>
-  <canvas id="canvas" width="700" height="350" style="background:#999">[Canvas not supported by your browser.]</canvas>
+  <canvas id="canvas" width="600" height="300" style="background:#999">[Canvas not supported by your browser.]</canvas>
 </div>
 
 ### Regulando el tiempo entre dispositivos

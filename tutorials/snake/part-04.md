@@ -139,7 +139,7 @@ Y añadimos el código dentro de `actions` para incrementar la puntuación y rec
 ```
 
 Las expresiones que pasamos en las llamadas a `random` tienen como objetivo dividir cada dimensión en secciones iguales de tamaño
-10 (generamos una cuadrícula en el lienzo), así que nos devolverá en que fila o columna posicionar la comida. Al multiplicarlas
+10 (generamos una cuadrícula en el contexto), así que nos devolverá en que fila o columna posicionar la comida. Al multiplicarlas
 de nuevo por 10 nos dará las nuevas coordenadas.
 
 Por último sustituimos el antiguo mensaje de tecla pulsada por uno que nos muestre la puntuación actual (en `paint`):
@@ -245,7 +245,7 @@ Por último cambiamos el código donde mostramos el mensaje de pausa para contem
 
 <div class="game_example">
   <script type="application/javascript" src="assets/game-04.js"></script>
-  <canvas id="canvas" width="700" height="350" style="background:#999">[Canvas not supported by your browser.]</canvas>
+  <canvas id="canvas" width="600" height="300" style="background:#999">[Canvas not supported by your browser.]</canvas>
 </div>
 <div>&nbsp;</div>
 

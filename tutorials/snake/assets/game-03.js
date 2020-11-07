@@ -1,3 +1,4 @@
+const GAME_CONTAINER = 'canvas';
 const KEY_LEFT = "ArrowLeft",
       KEY_UP = "ArrowUp",
       KEY_RIGHT = "ArrowRight",
@@ -8,9 +9,8 @@ const MOVING_UP = 0,
       MOVING_LEFT = 3;
 const KEY_ENTER = "Enter";
 
-let canvasName = 'canvas',
-    canvas = null,
-    ctx = null;
+let canvas,
+    ctx;
 let x = 50,
     y = 50;
 let lastPressed = null;
@@ -88,7 +88,7 @@ function run() {
 }
 
 function init() {
-  canvas = document.getElementById(canvasName);
+  canvas = document.getElementById(GAME_CONTAINER);
   ctx = canvas.getContext('2d');
 
   run();

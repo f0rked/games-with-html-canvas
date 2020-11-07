@@ -2,7 +2,7 @@
 (function (window, document, undefined) {
   "use strict";
 
-  const CANVAS_NAME = "canvas",
+  const GAME_CONTAINER,
         KEY_LEFT = "ArrowLeft",
         KEY_UP = "ArrowUp",
         KEY_RIGHT = "ArrowRight",
@@ -293,7 +293,7 @@
 
     static initialize() {
 
-      window.snakeGame = new SnakeGame(document.getElementById(CANVAS_NAME));
+      window.snakeGame = new SnakeGame(document.getElementById(GAME_CONTAINER));
 
       window.addEventListener("keydown", window.snakeGame.keyHandler.bind(window.snakeGame), false);
 

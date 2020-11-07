@@ -260,7 +260,7 @@ Otras alternativas son [JSHint](https://jshint.com/){:target="\_blank"} y [ESlin
 
 <div class="game_example">
   <script type="application/javascript" src="assets/game-06.js"></script>
-  <canvas id="canvas" width="700" height="350" style="background:#999">[Canvas not supported by your browser.]</canvas>
+  <canvas id="canvas" width="600" height="300" style="background:#999">[Canvas not supported by your browser.]</canvas>
 </div>
 <div>&nbsp;</div>
 

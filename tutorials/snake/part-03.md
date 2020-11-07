@@ -5,7 +5,7 @@
 
 ## Controlar el movimiento
 
-Ahora ya tenemos un objeto moviéndose rápidamente por nuestro lienzo, pero la potencia, sin control... no sirve de nada. El
+Ahora ya tenemos un objeto moviéndose rápidamente por nuestro contenedor, pero la potencia, sin control... no sirve de nada. El
 siguiente paso es poder interactuar con él: indicarle, mediante el teclado, a donde queremos que vaya; para ello necesitamos:
 
 1. **Saber que tecla se ha pulsado**. Cada tecla tiene un valor asignado y vamos a registrar una función que detecte cuando se
@@ -27,7 +27,7 @@ document.addEventListener('keydown', function (event) {
 ```
 
 La función `preventDefault` es una función que impide que el evento javascript se siga propagando hacia los elementos HTML que
-contienen nuestro lienzo, si no lo hicieramos así la página se movería mientras jugamos.
+contienen nuestro elemento `canvas`, si no lo hicieramos así la página se movería mientras jugamos.
 
 En la sección de definición de variables añadimos la nueva variable (inicialmente sin valor, con lo que el objeto estará quieto).
 Con esto completamos el segundo punto.
@@ -37,7 +37,7 @@ let lastPressed = null;
 ```
 
 Ahora ya podemos tomar decisiones en el juego en función de la tecla pulsada. Para tener una indicación visual de cuál es la
-última tecla pulsada podemos añadir estas líneas en nuestra función `paint`, justo después de limpiar el lienzo:
+última tecla pulsada podemos añadir estas líneas en nuestra función `paint`, justo después de limpiar el contexto:
 
 ``` javascript
 // Debug last key pressed
@@ -121,7 +121,7 @@ En segundo lugar calculamos la nueva posición en función de la dirección del 
   }
 ```
 
-Y, por último, comprobamos si estamos fuera del lienzo y, de ser así, lo recolocamos saliendo por el lado opuesto:
+Y, por último, comprobamos si estamos fuera del contenedor y, de ser así, lo recolocamos saliendo por el lado opuesto:
 
 ``` javascript
   // Out screen
@@ -143,7 +143,7 @@ deshabilitar pequeños fragmentos de código durante el desarrollo por motivos d
 la tecla pulsada) o pruebas.
 
 Guarda el contenido del fichero de código y recarga la página. Si el código es correcto ahora serás capaz de controlar el movimiento
-del cuadrado según se mueve por el lienzo. Si no es así usa la consola de desarrollador del navegador para ver cuál puede ser el
+del cuadrado según se mueve por el contenedor. Si no es así usa la consola de desarrollador del navegador para ver cuál puede ser el
 problema.
 
 ### Pausar
@@ -164,7 +164,7 @@ el modo pausa (la tecla enter, por ejemplo):
 const KEY_ENTER = "Enter";
 ```
 
-Con el juego en pausa el movimiento está detenido, pero el contenido del lienzo debe seguir mostrándose en el mismo estado en el
+Con el juego en pausa el movimiento está detenido, pero el contenido del juego debe seguir mostrándose en el mismo estado en el
 que estaba en el momento en el que el jugador lo activó. Lo que haremos será encerrar el contenido de nuestra función `actions`
 con un condicional `if (!pause)` (es decir, si no está en pausa). Este condicional, al incluir más de una línea de codigo debe
 llevar llaves `{ }` para indicar que lineas queremos abarcar.
@@ -199,7 +199,7 @@ Por último añadimos al final de la función `paint` el código para que se mue
 
 <div class="game_example">
   <script type="application/javascript" src="assets/game-03.js"></script>
-  <canvas id="canvas" width="700" height="350" style="background:#999">[Canvas not supported by your browser.]</canvas>
+  <canvas id="canvas" width="600" height="300" style="background:#999">[Canvas not supported by your browser.]</canvas>
 </div>
 <div>&nbsp;</div>
 

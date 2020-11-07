@@ -112,7 +112,7 @@ la nueva escena y de la clase `HighScores` en el constructor de `SnakeGame`.
 
 <div class="game_example">
   <script type="application/javascript" src="assets/game-10.js"></script>
-  <canvas id="canvas" width="700" height="350" style="background:#999">[Canvas not supported by your browser.]</canvas>
+  <canvas id="canvas" width="600" height="300" style="background:#999">[Canvas not supported by your browser.]</canvas>
 </div>
 <div>&nbsp;</div>
 

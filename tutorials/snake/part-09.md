@@ -277,11 +277,11 @@ no tiene método `load`, el método `paint` escribe texto y `actions` cambia a l
 La escena del juego es bastante más complicada:
 
 - Su constructor, tras llamar al constructor de la clase `Scene`, incluye todo el código del constructor de `SnakeGame` excepto
-los atributos del lienzo y la última tecla pulsada, que deben quedarse en esa clase para estar disponibles en todas las escenas.
+los atributos del contenedor y la última tecla pulsada, que deben quedarse en esa clase para estar disponibles en todas las escenas.
 - Incluye los métodos `isPaused`, `isGameover` y `loadAssets` de `SnakeGame`.
 - El método `load` corresponde con el método `reset`, y `paint` y `actions` con sus homónimos de la clase `SnakeGame`.
 
-En ambas clases hay que usar la referencia a la instancia del juego para acceder a las dimensiones del lienzo.
+En ambas clases hay que usar la referencia a la instancia del juego para acceder a las dimensiones del contenedor.
 
 Por ultimo debemos modificar la clase `SnakeGame` para que en su constructor cree los dos nuevos objetos y cambia a la escena inicial.
 
@@ -289,7 +289,7 @@ Por ultimo debemos modificar la clase `SnakeGame` para que en su constructor cre
 
 <div class="game_example">
   <script type="application/javascript" src="assets/game-09.js"></script>
-  <canvas id="canvas" width="700" height="350" style="background:#999">[Canvas not supported by your browser.]</canvas>
+  <canvas id="canvas" width="600" height="300" style="background:#999">[Canvas not supported by your browser.]</canvas>
 </div>
 <div>&nbsp;</div>
 

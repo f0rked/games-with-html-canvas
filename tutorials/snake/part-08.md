@@ -141,7 +141,7 @@ anteriormente. Modificamos el código para reemplazar los objetos `Rectangle` po
 argumento en las llamadas al método `draw`.
 
 Añadimos una nueva clase para representar la comida en el juego, `Food`, esta clase extiende a `SpriteRectangle` sólo tiene un
-método, `relocate`, que nos servirá para recolocar la comida en el tablero, recibe dos parámetros con el ancho y alto del lienzo
+método, `relocate`, que nos servirá para recolocar la comida en el tablero, recibe dos parámetros con el ancho y alto del contenedor
 y usa la función `random` para calcular las nuevas coordenadas. El constructor es el mismo que el de. Sustituye el código antiguo
 por el nuevo usando usando la clase.
 
@@ -155,7 +155,7 @@ cuerpo, al final llama al método `reborn` para posicionar la serpiente.
 código es equivalente al antiguo, pero usamos un bucle porque ahora la dirección es variable.
 - `draw` contiene el mismo código de pintado ya existente.
 - `move` contiene el código de movimiento del cuerpo (el mismo), la cabeza y el control de límites. Como parámetros necesitamos
-la distancia que queremos mover, la dirección y las dimensiones del lienzo.
+la distancia que queremos mover, la dirección y las dimensiones del contenedor.
 - `hasBitten` devuelve `true` si el cuerpo ha chocado o `false` en caso contrario. El código existente para la detección de
 colisión del cuerpo,
 - `hasEaten` devuelve `true` si la cabeza ha chocado con la comida recibida como parámetro o `false` en caso contrario.
@@ -166,13 +166,14 @@ Por último la clase `SnakeGame`, esta clase tiene como atributos el resto de va
 principales del juego. Algunas de estos métodos se definen como *estáticos*, ya que no necesitan de una instancia del juego.
 Veámoslas una a una:
 
-- `constructor` recibe como parámetro el lienzo e inicializa sus atributos, carga los assets mediante el método `loadAssets` y
-crea una instacia de la serpiente y la comida.
+- `constructor` recibe como parámetro el contenedor e inicializa sus atributos, carga los assets mediante el método `loadAssets`
+y crea una instacia de la serpiente y la comida.
 - `getWidth`, `getHeight`, `isPaused` y `isGameover` son métodos auxiliares (llamados *getters* en programación orientada a objetos)
 que permiten exponer atributos ocultando la implementación dentro del objeto, si se cambia la implementación no cambia el interfaz
 de la clase. Retornan, respectivamente, el ancho y alto del tablero del juego y si este está pausado o finalizado.
 - `loadAssets` se encarga de crear los recursos multimedia (antigua `initCompatibleAudio`), para ello crea las variables para las
 imágenes y el audio y les asigna las URLs que tenemos definidas como constantes.
+
 ``` javascript
     loadAssets() {
       let audioFormat = ((new Audio()).canPlayType('audio/ogg') != '') ? 0 : 1;
@@ -186,6 +187,7 @@ imágenes y el audio y les asigna las URLs que tenemos definidas como constantes
       this.over = new Audio(ASSET_OVER[audioFormat]);
     }
 ```
+
 En el caso del audio expresamos el soporte del navegador para los formatos como un número con valores `0` ó `1` que luego usamos
 como índice para seleccionar la URL adecuada.
 - `paint`, `actions` y `reset` contienen el mismo código que antes, pero adaptado al nuevo escenario de clases.
@@ -218,7 +220,7 @@ del juego, y no con `this` ya que estamos en un método estático.
 
 <div class="game_example">
   <script type="application/javascript" src="assets/game-08.js"></script>
-  <canvas id="canvas" width="700" height="350" style="background:#999">[Canvas not supported by your browser.]</canvas>
+  <canvas id="canvas" width="600" height="300" style="background:#999">[Canvas not supported by your browser.]</canvas>
 </div>
 <div>&nbsp;</div>
 

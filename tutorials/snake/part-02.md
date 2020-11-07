@@ -17,7 +17,7 @@ let x = 50,
 ```
 
 Luego modificamos nuestra función `paint` para limpiar la pantalla antes de volver a pintar, esto lo hacemos dibujando un
-rectángulo del mismo tamaño que el lienzo. Por último dibujamos un cuadrado más pequeño en la posición definida mediante las
+rectángulo del mismo tamaño que el contenedor. Por último dibujamos un cuadrado más pequeño en la posición definida mediante las
 variables `x` e `y`. En este ejemplo estamos "limpiando" con el color negro, pero puedes usar el color que más te guste (desde
 `#000000` hasta `#ffffff` en hexadecimal), [prueba distintos colores](https://www.w3schools.com/colors/colors_rgb.asp){:target="\_blank"}
 hasta que encuentres el que más te guste.
@@ -32,7 +32,7 @@ function paint(ctx) {
 }
 ```
 
-Actualmente la función `paint` se llama una única vez desde la función `init`, por lo que el lienzo sólo se dibuja una vez. Para
+Actualmente la función `paint` se llama una única vez desde la función `init`, por lo que el contenido sólo se dibuja una vez. Para
 conseguir movimiento tenemos que hacer que `paint` se ejecute a intervalos regulares. Para conseguirlo creamos una nueva función,
 `run`, a la que invocaremos desde `init` en vez de la función `paint`:
 
@@ -67,7 +67,7 @@ Después de guardar el código y recargar la página `index.html` podremos ver, 
 hacia la derecha hasta... desaparecer.
 
 Desaparecer, para no volver más. Si queremos verlo otra vez debemos recargar la página, pero volverá a hacer lo mismo. Para
-mantener nuestro cuadrado dentro de lienzo podemos hacer que vuelva a aparecer por el lado izquierdo añadiendo las siguientes
+mantener nuestro cuadrado dentro del contenedor podemos hacer que vuelva a aparecer por el lado izquierdo añadiendo las siguientes
 líneas al final de la función `actions`:
 
 ``` javascript
@@ -75,7 +75,7 @@ líneas al final de la función `actions`:
     x = 0;
 ```
 
-De esta manera, cuando el valor de `x` supere el ancho del lienzo, volveremos a posicionarlo en el extremo opuesto del mismo.
+De esta manera, cuando el valor de `x` supere el ancho del contenedor, volveremos a posicionarlo en el extremo opuesto del mismo.
 
 Et voilà...
 
@@ -83,7 +83,7 @@ Et voilà...
 
 <div class="game_example">
   <script type="application/javascript" src="assets/game-02.js"></script>
-  <canvas id="canvas" width="700" height="350" style="background:#999">[Canvas not supported by your browser.]</canvas>
+  <canvas id="canvas" width="600" height="300" style="background:#999">[Canvas not supported by your browser.]</canvas>
 </div>
 <div>&nbsp;</div>
 ``` javascript

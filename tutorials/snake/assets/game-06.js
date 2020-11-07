@@ -2,6 +2,7 @@
 (function (window, document, undefined) {
   "use strict";
 
+  const GAME_CONTAINER = 'canvas';
   const KEY_LEFT = "ArrowLeft",
         KEY_UP = "ArrowUp",
         KEY_RIGHT = "ArrowRight",
@@ -12,9 +13,8 @@
         MOVING_LEFT = 3;
   const KEY_ENTER = "Enter";
 
-  let canvasName = 'canvas',
-      canvas = null,
-      ctx = null;
+  let canvas,
+      ctx;
   let snake = new Array();
   let food = null;
   let lastPressed = null;
@@ -200,7 +200,7 @@
   }
 
   function init() {
-    canvas = document.getElementById(canvasName);
+    canvas = document.getElementById(GAME_CONTAINER);
     ctx = canvas.getContext('2d');
 
     // Create snake
