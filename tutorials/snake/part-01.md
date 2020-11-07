@@ -5,91 +5,89 @@
 
 ## Dibujar
 
-En esta primera parte vamos a crear el área del juego y a mostrar algo de contenido estático, algo sencillo para empezar. Para
-ello vamos a necesitar dos ficheros:
+El primer elemento necesario al empezar con el desarrollo es un contenedor donde poder mostrar el juego. En esta primera parte
+vamos a crear el contenedor del juego y a mostrar contenido estático en él, algo sencillo para empezar. Para ello vamos a necesitar
+dos ficheros:
 - Uno con la página HTML en la que se mostrará el juego.
 - Otro con el código Javascript del juego.
 
-Comencemos creando un fichero index.html con el siguiente contenido:
+### HTML
+
+Creamos un fichero, `index.html`, con el siguiente contenido:
 
 ``` html
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My First Canvas Game</title>
-
-    <script type="application/javascript" src="game.js"></script>
-  </head>
-
-  <body>
-    <h1>My First Canvas Game</h1>
-
-    <p>
-      <canvas id="canvas" width="600" height="300" style="background:#999">[Canvas not supported by your browser.]</canvas>
-    </p>
-  </body>
-</html>
+{% include_relative game.html %}
 ```
 
-No vamos a detenernos a explicar el código HTML ya que no es necesario para comprender el desarrollo de videojuegos, tan sólo
-digamos que el código anterior es una página web básica donde mostrar el juego (si quieres aprender más sobre HTML mira la
-sección de referencias en la home). Sólo hay dos líneas importantes que debes comprender:
+No nos detendremos mucho con el código HTML ya que no es necesario para comprender el desarrollo de videojuegos, sólo decir que
+el fichero anterior es una página web básica donde vamos a mostrar el juego (mira en la sección de [referencias de la home]({{ "/#references" | relative_url }})
+si quieres aprender más sobre HTML). Los dos elementos importantes que hay que comprender son:
 
 ``` html
-<script type="application/javascript" src="game.js"></script>
+  <script type="application/javascript" src="assets/game.js"></script>
 ```
 
-Mediante el elemento `script` incluimos el archivo `game.js`, que contendrá el código de nuestro juego.
+El elemento HTML `script` permite incluir código Javascript, en este caso desde el archivo `assets/game.js` con el código de
+nuestro juego.
 
 ``` html
-<canvas id="canvas" width="600" height="300" style="background:#999">[Canvas not supported by your browser.]</canvas>
+  <canvas id="canvas" width="700" height="350" style="background:#999">
+    [Canvas not supported by your browser.]
+  </canvas>
 ```
 
-El elemento `canvas` es donde dibujaremos nuestro juego y le daremos un tamaño de 600px de ancho por 300px de alto. Puedes
-personalizar el tamaño de acuerdo al juego que desarrolles, pero para nosotros es suficiente así.
+El elemento HTML `canvas` (traducido como lienzo en español) es el contenedor para dibujar nuestro juego, le daremos un tamaño
+de 600px de ancho por 300 de alto. Puedes variar el tamaño de acuerdo al juego que desarrolles, pero en esta ocasión es
+suficiente así. El atributo `id` asigna al elemento un identificador único dentro de la página, esto es necesario para poder
+hacer referencia a él desde el código, puedes darle el valor que quieras, pero debe coincidir con el valor usado en el código.
 
-El atributo `id` es el identificador único del elemento dentro de la página y es necesario para poder hacer referencia a él
-desde el código del juego, puedes darle el valor que quieras, pero debe coincidir con el valor que uses dentro del código.
+Mediante el atributo `style` le ponemos un color de fondo gris para poder identificarlo dentro de la página. Si hay algún problema
+con el código, sólo se mostrará un recuadro de color gris a modo de alerta (aunque también usaremos la consola del navegador para
+ayudarnos con la depuración del código). Más adelante puedes cambiarlo si lo deseas.
 
-Por último le ponemos un color de fondo gris para identificar donde se encuentra dentro de la página. Si hubiera algún problema
-con la página, sólo se mostrará el color gris a modo de alerta (aunque también usaremos la consola del navegador para ayudarnos
-con la depuración del código). Más adelante puedes cambiarlo si lo deseas, pero de momento lo dejaremos así.
+### Código Javascript
 
-Ahora crearemos el código de nuestro juego, algo sencillo como dijimos al principio. Crea un fichero llamado `game.js` y copia
-en él el siguiente contenido:
+Generalmente, cuando se crea un sitio web, los recursos auxiliares (código Javascript, estilos css, imágenes,...) se almacenan en
+un subdirectorio junto al código HTML, nosotros vamos a seguir esta regla. Creamos pues un subdirectorio `assets`, y dentro, un
+fichero llamado `game.js` donde copiamos el siguiente contenido:
 
 ``` javascript
 {% include_relative assets/game-01.js %}
 ```
 
-Vamos a analizar el código poco a poco para entenderlo. Al principio declaramos las variables donde almacenaremos el nombre del
-lienzo (la traducción de canvas en español) que vamos a usar, el propio lienzo y su contexto gráfico 2D, que es la herramienta
-que usaremos para dibujar. Las dos últimas, inicialmente, no tendrán valor asignado.
+Ahora vamos a analizar el código con detenimiento para entenderlo.
 
-Luego definimos la función `paint`, que usaremos para generar la imagen el el contexto gráfico 2D recibido. Primero seleccionamos
-el color que queremos usar (`#f00`) y luego dibujamos un rectángulo en la posición *x = 50*, *x = 50* (el origen de coordenadas
-está en la esquina superior izquierda del lienzo), con 100px de ancho y 60px de alto. Después usaremos el color `#0f0` para
-rellenar el interiór del rectángulo.
+Al principio tenemos la sección de declaración de constantes y variables, las palabras reservadas `const` y `let` nos permiten
+declararar constantes y variables respectivamente. Declaramos una constante con el identificador del contenedor y dos variables
+para almacenar las referencias al propio contenedor y a su contexto gráfico, que es el que usaremos realmente para dibujar.
 
-La función `init` obtiene la referencia del lienzo usando su `id`, que almacenamos en una variable al inicio del código con el
-mismo valor que usamos en el atributo `id` del elemento `canvas` en la página HTML, y del contexto gráfico y las almacena en las
-variables que definimos al inicio del código. En la última línea de la función llamamos a nuestra función `paint` pasándole el
-contexto del lienzo para dibujar en él.
+A continuación definimos la funciones con el código para dibujar el contenido e inicializar el juego.
 
-Por último usamos la función `addEventListener`, definida en el navegador, para registrar nuestra función `init` para que, cuando
-se termine de cargar la página, se ejecute. Es importante que retrasemos la ejecucíon hasta que la página se carge completamente
-porque si no podría producirse un error al no encontrar el lienzo.
+La función `paint` genera la imagen en el contexto gráfico 2D recibido. Primero fijamos el color para trazos (`#f00`) para dibujar
+un rectángulo (coordenadas *x = 170*, *x = 150* y 200px de ancho por 120 de alto) con una semicircunferencia a continuación. El
+origen de coordenadas está en la esquina superior izquierda del contexto. Después usamos el color `#0f0` para rellenar el interior
+del rectángulo y del semicírculo. Por último escribimos un par de textos. Como verás el contexto gráfico nos provee de funciones
+para realizar dibujos y escribir textos, en la sección de [referencias de la home]({{ "/#references" | relative_url }}) puedes
+encontrar más información.
 
-Una vez guardados los dos archivos, al hacer doble click en `index.html` y si lo hemos hecho todo bien, se debería cargar una
-página web con nuestro, lienzo mostrando un rectángulo verde con vorde rojo.
+La función `init` obtiene la referencia del contenedor (usando su `id`, cuyo valor almacenamos en una constante al inicio del código
+y que debe coincidir con el dado al atributo `id` del elemento `canvas` en la página HTML) y del contexto gráfico y las almacena
+en las variables definidas para este propósito. Las dos líneas siguientes crean dos propiedades en el objeto `ctx` con el ancho y
+alto del contexto y que son usadas en la función `paint` para realizar cálculos al escribir texto. En la última línea de la función
+llamamos a la función `paint` pasándole el contexto para dibujar en él.
 
-Diviértete cambiando los colores y dibujando más rectángulos, hasta que te familiarices con el lienzo.
+Por último usamos la función `addEventListener` (existente en el navegador) para registrar nuestra función `init` para que, una
+vez terminada de cargar la página, se ejecute. Es importante retrasar la ejecucíon hasta que la página se carge completamente
+porque si no podría producirse un error al no encontrar el contenedor.
+
+Una vez guardados los dos archivos, al hacer doble click en `index.html` (y si lo hemos hecho todo bien) se debería cargar una
+página web con nuestro contenedor mostrando una figura de color verde con un borde rojo.
+
+Diviértete cambiando los colores y dibujando más figuras, hasta que te familiarices con el uso del contexto.
 
 <div class="game_example">
   <script type="application/javascript" src="assets/game-01.js"></script>
-  <canvas id="canvas" width="700" height="350" style="background:#999">[Canvas not supported by your browser.]</canvas>
+  <canvas id="canvas" width="600" height="300" style="background:#999">[Canvas not supported by your browser.]</canvas>
 </div>
 <div>&nbsp;</div>
 

@@ -36,4 +36,6 @@ Herencia y la cadena de prototipos [(es)](https://developer.mozilla.org/es/docs/
 
 Cómo funcionan los closures [(es)](https://es.stackoverflow.com/questions/607?fromen=111102){:target="\_blank"} [(en)](https://stackoverflow.com/questions/111102/how-do-javascript-closures-work){:target="\_blank"}
 
-Tutorial de HTML 5 [(en)](https://www.w3schools.com/html/){:target="\_blank"}
+Tutorial de HTML5 [(en)](https://www.w3schools.com/html/){:target="\_blank"}
+
+Tutorial de canvas HTML5 [(es)](https://developer.mozilla.org/es/docs/Web/Guide/HTML/Canvas_tutorial){:target="\_blank"} (incompleto) [(en)](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial){:target="\_blank"}
