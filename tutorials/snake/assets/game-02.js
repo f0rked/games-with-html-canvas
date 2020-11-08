@@ -6,6 +6,7 @@ let x = 50,
     y = 50;
 
 function paint(ctx) {
+  // Clean the context for drawing the new frame
   ctx.fillStyle = '#000000';
   ctx.fillRect(0, 0, ctx.width, ctx.height);
 
@@ -16,7 +17,7 @@ function paint(ctx) {
 function actions() {
   x += 2;
 
-  if (x > canvas.width) {
+  if (x >= canvas.width) {
     x = 0;
   }
 }
