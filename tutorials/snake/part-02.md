@@ -38,9 +38,9 @@ function run() {
 }
 ```
 
-En la primera línea llamamos a `requestAnimationFrame`, una función del navegador que solicita el repintado de la ventana del
-navegador en el próximo ciclo de animación, y que recibe como parámetro una función a la que invoca durante el repintado del
-navegador. La frecuencia de los ciclos de animación suele ser de 60 veces por segundo para las pestañas activas. Veremos más
+En la primera línea llamamos a `requestAnimationFrame`, una función del navegador usada para solicitar realizar una animación
+para el próximo ciclo de repintado de la ventana, y que recibe como parámetro una función a la que invoca antes del repintado 
+del navegador. La frecuencia de los ciclos de animación suele ser de 60 veces por segundo para las pestañas activas. Veremos más
 al respecto en la sección [RequestAnimationFrame](./part-07.html).
 
 En las siguientes líneas invocamos a las funciones `actions` y `paint`. La función `paint` ya la conocemos, y la nueva función
@@ -61,7 +61,7 @@ que ahora no veamos las ventajas, pero según se van incrementando las líneas d
 Después de guardar el código y recargar la página `index.html` podremos ver, si lo hicimos bien, como el cuadrado se ...
 
 <div class="game_example">
-  <canvas id="canvas2" width="600" height="300" style="background:#999">[Canvas not supported by your browser.]</canvas>
+  <canvas id="canvas01" width="600" height="300" style="background:#999">[Canvas not supported by your browser.]</canvas>
 </div>
 
 ¿Que ocurre? ¡Hemos dibujado una línea horizontal! ¡Eso no es lo que queríamos!
@@ -81,7 +81,7 @@ hasta que encuentres el que más te guste. Añade estas tres líneas al principi
 Guardamos y recargamos de nuevo y ahora podemos ver como el cuadrado se  desplaza hacia la derecha hasta...
 
 <div class="game_example">
-  <canvas id="canvas3" width="600" height="300" style="background:#999">[Canvas not supported by your browser.]</canvas>
+  <canvas id="canvas02" width="600" height="300" style="background:#999">[Canvas not supported by your browser.]</canvas>
 </div>
 
 desaparecer. Desaparecer, para no volver más. Si queremos verlo otra vez debemos recargar la página, pero volverá a hacer lo
@@ -103,7 +103,7 @@ Et voilà...
 
 <div class="game_example">
   <script type="application/javascript" src="assets/game-002.js"></script>
-  <canvas id="canvas" width="600" height="300" style="background:#999">[Canvas not supported by your browser.]</canvas>
+  <canvas id="canvas03" width="600" height="300" style="background:#999">[Canvas not supported by your browser.]</canvas>
 </div>
 <div>&nbsp;</div>
 ``` javascript

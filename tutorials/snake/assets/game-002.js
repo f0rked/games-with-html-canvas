@@ -1,67 +1,85 @@
-const GAME_CONTAINER = 'canvas';
+function GamePanel(container) {
+  this.element = document.getElementById(container);
+  this.ctx = this.element.getContext('2d');
+  this.ctx.width = this.element.width;
+  this.ctx.height = this.element.height;
+  this.x = 50;
+  this.y = 50;
+  this.running = false;
+  this.element.handler = this;
+}
 
-let canvas,
-    ctx,
-    ctx2,
-    ctx3;
-let x = 50,
-    x2 = 50,
-    y = 50;
+GamePanel.prototype.run = function () {
+  if (this.running)
+    window.requestAnimationFrame(this.run.bind(this));
+
+  this.actions();
+  this.paint(this.ctx);
+}
+
+function paint_wrong(ctx) {
+  ctx.fillStyle = '#00ff00';
+  ctx.fillRect(this.x, this.y, 10, 10);
+}
 
 function paint(ctx) {
   ctx.fillStyle = '#000000';
   ctx.fillRect(0, 0, ctx.width, ctx.height);
 
   ctx.fillStyle = '#00ff00';
-  ctx.fillRect(x, y, 10, 10);
+  ctx.fillRect(this.x, this.y, 10, 10);
 }
 
-function paint2(ctx) {
-  if (ctx.clr == 1) {
-    ctx.fillStyle = '#000000';
-    ctx.fillRect(0, 0, ctx.width, ctx.height);
-  }
-
-  ctx.fillStyle = '#00ff00';
-  ctx.fillRect(x2, y, 10, 10);
+function actions_wrong() {
+  this.x += 2;
 }
 
 function actions() {
-  x += 2;
+  this.x += 2;
 
-  if (x > canvas.width) {
-    x = 0;
+  if (this.x > this.element.width) {
+    this.x = 0;
   }
 }
 
-function actions2() {
-  x2 += 2;
-}
+function runner(entries, observer) {
 
-function run() {
-  window.requestAnimationFrame(run);
-  actions();
-  paint(ctx);
+    entries.forEach((item, i) => {
 
-  actions2();
-  paint2(ctx3);
-  paint2(ctx2);
+      if (item.intersectionRatio > 0.5 && item.target.handler) {
+        if (!item.target.handler.running) {
+          item.target.handler.running = true;
+          item.target.handler.run();
+        }
+      } else if (item.intersectionRatio <= 0.0 && item.target.handler) {
+        item.target.handler.running = false;
+      }
+    });
+
 }
 
 function init() {
-  canvas = document.getElementById(GAME_CONTAINER);
-  ctx = canvas.getContext('2d');
-  ctx.width = canvas.width;
-  ctx.height = canvas.height;
-  ctx2 = document.getElementById("canvas2").getContext('2d');
-  ctx2.width = canvas.width;
-  ctx2.height = canvas.height;
-  ctx3 = document.getElementById("canvas3").getContext('2d');
-  ctx3.width = canvas.width;
-  ctx3.height = canvas.height;
-  ctx3.clr = 1;
+  let observer = new IntersectionObserver(runner,
+                                          {
+                                            rootMargin: '0px',
+                                            threshold: 0.5
+                                          });
 
-  run();
+  let game01 = new GamePanel("canvas01");
+  game01.actions = actions_wrong;
+  game01.paint = paint_wrong;
+  observer.observe(game01.element);
+  let game02 = new GamePanel("canvas02");
+  game02.actions = actions_wrong;
+  game02.paint = paint;
+  observer.observe(game02.element);
+
+  let game03 = new GamePanel("canvas03");
+  game03.actions = actions;
+  game03.paint = paint;
+  observer.observe(game03.element);
+
+
 }
 
 window.addEventListener('load', init, false);
