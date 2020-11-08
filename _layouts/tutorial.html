@@ -10,13 +10,13 @@ layout: default
       {% assign results = site.data.tutorials | where: "id", page.id %}
       {% assign tutorial = results[0] %}
       <div class="menu_holder">
-        <h2>{{ tutorial.name }}</h2>
-        <p><a href="index.html">Index</a></p>
+        <a class="a-tutorial_index" href="{{ tutorial.link | relative_url }}">
+          <h2>{{ tutorial.name }}</h2>
+        </a>
         <ol id="toc_list">
           {% for ch in tutorial.toc %}
           <li><a href="{{ ch.link }}">{{ ch.name }}</a></li>
           {% endfor %}
         </ol>
-        <p><a href="{{ "/" | relative_url}}">./</a></p>
       </div>
     </div>
