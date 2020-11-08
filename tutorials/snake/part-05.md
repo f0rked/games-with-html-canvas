@@ -55,17 +55,14 @@ que usar un bucle `for` en la función `paint`:
 
 En la función `actions` añadimos todo el código necesario para la nueva gestión del movimiento.
 
-El cuerpo debemos moverlo en orden inverso, de atrás hacia adelante, pero sólo si hay dirección de movimiento (cuando no hay
-dirección de movimiento la cabeza no se mueve, si el cuerpo lo hiciera se detectaría un choque). Todos los elementos del cuerpo,
-excepto la cabeza, toman la posición del elemento anterior en el vector. Este código va antes que el movimiento de la cabeza:
+El cuerpo debemos moverlo en orden inverso, de atrás hacia adelante. Todos los elementos del cuerpo, excepto la cabeza, toman la
+posición del elemento anterior en el vector. Este código va antes que el movimiento de la cabeza:
 
 ``` javascript
   // Move snake's body
-  if (movingDirection != null) {
-    for (i = snake.length - 1; i > 0; i--) {
-      snake[i].x = snake[i - 1].x;
-      snake[i].y = snake[i - 1].y;
-    }
+  for (i = snake.length - 1; i > 0; i--) {
+    snake[i].x = snake[i - 1].x;
+    snake[i].y = snake[i - 1].y;
   }
 ```
 
@@ -81,22 +78,22 @@ Para detectar si la cabeza ha chocado con algún otro segmento del cuerpo, lo qu
   }
 ```
 
-Habrás notado que comprobamos los segmentos coemzando desde atrás (es más probable que el choque se produzca con los últimos
+Habrás notado que comprobamos los segmentos comenzando desde atrás (es más probable que el choque se produzca con los últimos
 segmentos) y que nos paramos en el tercer segmento, esto es porque la cabeza (segmento 0) nunca puede chocar con el cuello
 (segmento 1).
 
 Por último, añadimos un segmento al cuerpo de la serpiente cuando se coma una manzana. Añadimos la siguiente línea dentro del
-condicional que detecta que la serpiente se ha comido la manzana (no es necesario indicar coordenadas, en el siguiente ciclo se
-  recalcularán automáticamente):
+condicional que detecta que la serpiente se ha comido la manzana (le asignamos las coordenadas de la cabeza, y en el siguiente
+ciclo se recalcularán automáticamente):
 
 ``` javascript
-  snake.push(new Rectangle(0, 0, '#00ff00', 10));
+  snake.push(new Rectangle(snake[0].x, snake[0].y, '#00ff00', 10));
 ```
 
-Adicionalmente debemos ignorar cualquier orden por parte del usuario del juego de realizar un movimiento en sentido opuesto, es
-decir, si la serpiente se mueve hacia la derecha y el usuario cambia la dirección hacia la izquierda debemos ignorar este movimiento
-y seguir en la dirección actual. Para conseguir esto sustituimos la primera línea del código de la función que registra la pulsación
-de teclas por:
+Para mejorar la jugabilidad vamos ignorar cualquier orden por parte del usuario del juego de realizar un movimiento en sentido
+opuesto al movimiento actual, es decir, si la serpiente se mueve hacia la derecha y el usuario cambia la dirección hacia la
+izquierda debemos ignorar este movimiento y seguir en la dirección actual. Para conseguir esto sustituimos la primera línea del
+código de la función que registra la pulsación de teclas por:
 
 ``` javascript
   if (lastPressed == KEY_LEFT && event.key == KEY_RIGHT) ;
@@ -114,18 +111,17 @@ la actual.
 
 Ahora que ya tenemos toda la funcionalidad implementada vamos a introducir contenido multimedia. Como ya comentamos al principio,
 en un juego, tanto o más importante que la jugabilidad (la trama del juego, lo fácil que es manejarlo) es el interfaz (aspecto
-gráfico y el sonido). Hasta ahora sólo nos hemos centrado en lo primero, ahora vamos a ocuparnos de lo segundo, vamos a dotar
-al juego de elementos gráficos y auditivos que lo hagan más atractivo.
+gráfico y el sonido). Hasta ahora nos hemos centrado en lo primero, por lo que ya toca ocuparnos de lo segundo, vamos a dotar al
+juego de elementos gráficos y auditivos que lo hagan más atractivo.
 
 En cuanto al aspecto gráfico, es muy importante hacer notar que el tamaño de los *sprites* (así se denominan a las imágenes que
 representan partes del juego) está íntimamente relacionado con el de los componentes que hemos estado dibujando, si no son del
 mismo tamaño podría parecer que los componentes no se tocan cuando en realidad es así, o viceversa.
 
-Para empezar necesitaremos un editor gráfico (MS paint en Windows, Preview en MacOS, KolourPaint en Linux, Gimp,...) para poder
-generar las imágenes que usaremos como sprites. En nuestro caso dibujamos imágenes de 10x10 píxeles, una con forma de fruta para
-la comida y otra para cada una de las secciones del cuerpo. Luego guardaremos estas imágenes en una carpeta que llamaremos `assets`
-en el mismo directorio que la ṕagina HTML del juego. En la sección [Recursos multimedia](#resources) puedes encontrar las imágenes
-usadas en el tutorial.
+Para empezar necesitamos un editor gráfico (MS paint en Windows, Preview en MacOS, KolourPaint en Linux, Gimp,...) para poder
+generar las imágenes que vamos a usar como sprites. En nuestro caso dibujamos dos imágenes de 10x10 píxeles, una con forma de
+fruta para la comida y otra para cada una de las secciones del cuerpo. Luego guardamos estas imágenes en la carpeta `assets`,
+junto al código del juego. En la sección [Recursos multimedia](#resources) puedes encontrar las imágenes usadas en el tutorial.
 
 Una vez que tenemos nuestros sprites listos creamos dos variables de tipo `Image`,
 
@@ -162,16 +158,7 @@ siguiente manera:
   };
 ```
 
-Del mismo modo debemos modificar la función `paint` para pasar los sprites a las funciones `paint` de la serpienta y la comida:
-
-``` javascript
-  // Draw snake
-  for (i = 0; i < snake.length; i++) {
-    snake[i].draw(ctx, sectImg);
-  }
-
-  food.draw(ctx, foodImg);
-```
+Del mismo modo debemos modificar la función `paint` para pasar los sprites a las funciones `draw` de la serpiente y la comida:
 
 Al guardar y recargar la página de nuestro juego podemos ver como ahora se muestran nuestras imágenes en vez de los cuadrados de
 colores.
@@ -180,7 +167,7 @@ Para acabar con el contenido multimedia vamos a incluir un par de sonidos para m
 la serpiente coma una manzana, y cuando la serpiente muera y el juego termine. En la sección [Recursos multimedia](#resources)
 puedes encontrar los sonidos usados en el tutorial.
 
-Creamos las variables de tipo `Audio`,
+Creamos dos variables de tipo `Audio`,
 
 ``` javascript
 let eat = new Audio(),
@@ -195,32 +182,11 @@ les asignamos valor en la función `init`,
   over.src = "assets/over.oga";
 ```
 
-e incluimos una llamada al método `play` en el momento adecuado:
-
-
-``` javascript
-  // Body Intersects
-  for (i = snake.length - 1; i > 1; i--) {
-    if (snake[0].intersects(snake[i])) {
-      over.play();
-      gameover = true;
-      pause = true;
-    }
-  }
-
-  // Food eaten
-  if (snake[0].intersects(food)) {
-    eat.play();
-    score += 1; // also score++ or score = score + 1
-    snake.push(new Rectangle(0, 0, '#00ff00', 10));
-    food.x = random(canvas.width / 10 - 1) * 10;
-    food.y = random(canvas.height / 10 - 1) * 10;
-  }
-```
+e incluimos una llamada al método `play` en el momento adecuado: al detectar un choque de la cabeza con el cuerpo y al comer una manzana.
 
 ### Recursos usados {#resources}
 
-A continuación te proporcionamos los recursos que hemos utilizado. Click derecho sobre cada enlace y "Guardar enlace como":
+Estos son los recursos que hemos utilizado. Haz click derecho sobre cada enlace y "Guardar enlace como":
 
 - [Imagen de la manzana](assets/apple.png).
 - [Imagen del cuerpo](assets/sect.png).

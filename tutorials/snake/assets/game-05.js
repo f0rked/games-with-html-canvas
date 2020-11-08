@@ -1,21 +1,21 @@
 const GAME_CONTAINER = 'canvas';
-const KEY_LEFT = "ArrowLeft",
-      KEY_UP = "ArrowUp",
+const KEY_UP = "ArrowUp",
       KEY_RIGHT = "ArrowRight",
-      KEY_DOWN = "ArrowDown";
+      KEY_DOWN = "ArrowDown",
+      KEY_LEFT = "ArrowLeft";
+const KEY_ENTER = "Enter";
 const MOVING_UP = 0,
       MOVING_RIGHT = 1,
       MOVING_DOWN = 2,
       MOVING_LEFT = 3;
-const KEY_ENTER = "Enter";
 
 let canvas,
     ctx;
 let snake = new Array();
-let food = null;
 let lastPressed = null;
-let movingDirection = null;
+let movingDirection = MOVING_RIGHT;
 let pause = true;
+let food = null;
 let score = 0;
 let gameover = false;
 let sectImg = new Image(),
@@ -60,8 +60,9 @@ function random(max) {
 }
 
 function paint(ctx) {
+  // Clean the context for drawing the new frame
   ctx.fillStyle = '#000000';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillRect(0, 0, ctx.width, ctx.height);
 
   // Draw score
   ctx.fillStyle = '#ffffff';
@@ -72,22 +73,23 @@ function paint(ctx) {
     snake[i].draw(ctx, sectImg);
   }
 
+  // Draw food
   food.draw(ctx, foodImg);
 
   // Draw pause or gameover caption
   if (pause) {
-      ctx.textAlign = 'center';
-      if (gameover) {
-          ctx.fillText('GAME OVER', canvas.width / 2, canvas.height / 2);
-      } else {
-          ctx.fillText('PAUSE', canvas.width / 2, canvas.height / 2);
-      }
-      ctx.textAlign = 'left';
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'center';
+    if (gameover) {
+      ctx.fillText('GAME OVER', canvas.width / 2, canvas.height / 2);
+    } else {
+      ctx.fillText('PAUSE', canvas.width / 2, canvas.height / 2);
+    }
+    ctx.textAlign = 'left';
   }
 }
 
 function actions() {
-
   if (!pause) {
     // GameOver Reset
     if (gameover) {
@@ -96,18 +98,16 @@ function actions() {
 
     // Check direction
     switch (lastPressed) {
-      case KEY_LEFT: movingDirection = MOVING_LEFT; break;
       case KEY_UP: movingDirection = MOVING_UP; break;
       case KEY_RIGHT: movingDirection = MOVING_RIGHT; break;
       case KEY_DOWN: movingDirection = MOVING_DOWN; break;
+      case KEY_LEFT: movingDirection = MOVING_LEFT; break;
     }
 
     // Move snake's body
-    if (movingDirection != null) {
-      for (i = snake.length - 1; i > 0; i--) {
-        snake[i].x = snake[i - 1].x;
-        snake[i].y = snake[i - 1].y;
-      }
+    for (i = snake.length - 1; i > 0; i--) {
+      snake[i].x = snake[i - 1].x;
+      snake[i].y = snake[i - 1].y;
     }
 
     // Move snake's head
@@ -118,16 +118,15 @@ function actions() {
       case MOVING_LEFT: snake[0].x -= 10; break;
     }
 
-    // Out screen
+    // Out screen management
     if (snake[0].x < 0) {
       snake[0].x = canvas.width - 10;
-    } else if (snake[0].x > canvas.width) {
+    } else if (snake[0].x >= canvas.width) {
       snake[0].x = 0;
     }
-
     if (snake[0].y < 0) {
       snake[0].y = canvas.height - 10;
-    } else if (snake[0].y > canvas.height) {
+    } else if (snake[0].y >= canvas.height) {
       snake[0].y = 0;
     }
 
@@ -143,8 +142,8 @@ function actions() {
     // Food eaten
     if (snake[0].intersects(food)) {
       eat.play();
-      score += 1; // also score++ or score = score + 1
-      snake.push(new Rectangle(0, 0, '#00ff00', 10));
+      score += 1; /* also score++ or score = score + 1 */
+      snake.push(new Rectangle(snake[0].x, snake[0].y, '#00ff00', 10));
       food.x = random(canvas.width / 10 - 1) * 10;
       food.y = random(canvas.height / 10 - 1) * 10;
     }
@@ -163,19 +162,17 @@ function repaint() {
 }
 
 function run() {
-  setTimeout(run, 50);
+  setTimeout(run, 40);
   actions();
 }
 
 function reset() {
   score = 0;
-  movingDirection = null;
-
+  movingDirection = MOVING_RIGHT;
   snake.length = 0;
   snake.push(new Rectangle(300, 150, '#00ff00', 10));
   snake.push(new Rectangle(290, 150, '#00ff00', 10));
   snake.push(new Rectangle(280, 150, '#00ff00', 10));
-
   food.x = random(canvas.width / 10 - 1) * 10;
   food.y = random(canvas.height / 10 - 1) * 10;
   gameover = false;
@@ -184,6 +181,8 @@ function reset() {
 function init() {
   canvas = document.getElementById(GAME_CONTAINER);
   ctx = canvas.getContext('2d');
+  ctx.width = canvas.width;
+  ctx.height = canvas.height;
 
   // Create snake
   snake.push(new Rectangle(300, 150, '#00ff00', 10));
@@ -191,7 +190,7 @@ function init() {
   snake.push(new Rectangle(280, 150, '#00ff00', 10));
 
   // Create initial food
-  food = new Rectangle(450, 280, '#ff0000', 10);
+  food = new Rectangle(470, 150, '#ff0000', 10);
 
   // Load assets
   sectImg.src = "assets/sect.png";
@@ -203,7 +202,6 @@ function init() {
   repaint();
 }
 
-
 document.addEventListener('keydown', function (event) {
   if (lastPressed == KEY_LEFT && event.key == KEY_RIGHT) ;
   else if (lastPressed == KEY_UP && event.key == KEY_DOWN) ;
@@ -212,7 +210,8 @@ document.addEventListener('keydown', function (event) {
   else
     lastPressed = event.key;
 
-  if (lastPressed == KEY_LEFT || lastPressed == KEY_UP || lastPressed == KEY_RIGHT || lastPressed == KEY_DOWN)
+  if (lastPressed == KEY_UP || lastPressed == KEY_RIGHT ||
+      lastPressed == KEY_DOWN || lastPressed == KEY_LEFT)
     event.preventDefault();
 }, false);
 
