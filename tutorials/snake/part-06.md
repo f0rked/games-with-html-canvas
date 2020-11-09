@@ -17,16 +17,16 @@ estándard ECMAscript y la versión 6 es la más extendida y la que aportó mayo
 el número de errores que se generaben debido a sus evoluciones durante su larga vida.
 
 En esta sección vamos a realizar una serie de cambios en el código que aprovechan todas las ventajas de las versiones modernas
-de Javascript. El [la página principal de este sitio]({{ "/#references" | relative_url }}) tienes disponibles enlaces a información
-más detallada.
+de Javascript. En la sección de [referencias de la home]({{ "/#references" | relative_url }}) tienes disponibles enlaces con
+información más detallada.
 
 ### Encapsulación de código
 
 Una de las principales características de Javascript es que todos los scripts son globales, esto quiere decir que comparten el
 scope (el ámbito en el que se definen nombres del programa), con lo que un script podría sobreescribir el valor de una variable
 o una función de otro script provocando fallos de muy difícil detección. Inicialmente Javascript sólo tenía dos scopes, global y
-de función, con la versión 6 del estándard aprece un scope nuevo que es el de bloque (entre las llaves de instrucciones compuestas
-como if y for).
+de función, con la versión 6 del estándard aparece un scope nuevo que es el de bloque (código contenido entre las llaves en
+instrucciones compuestas como `if` y `for`).
 
 La solución al problema de la reescritura ha sido (y es todavía, porque no veremos los módulos) encerrar el código del script
 dentro de una función, para proteger los nombres propios y evitar sobreescribir los globales. El problema es que el scope de una
@@ -43,15 +43,16 @@ juego entre estas dos líneas:
 ```
 
 De esta manera protegemos nuestros nombres definidos de manera global (fuera de cualquier función) y no sobreescribimos las de
-otros posibles scripts con los que podemos convivir. Nuestro código podrá seguir usando nombres globales si es necesario.
+otros posibles scripts con los que podemos convivir. Nuestro código podrá seguir usando nombres globales si es necesario (aunque
+otros scripts podrían sobreescribirlos).
 
 Podrás ver que la función que hemos definido declara tres argumentos, pero sólo recibe dos parámetros en la invocación (`window`
 y `document` son los principales objetos globales en el navegador). Puede que no parezca tener sentido, pero hay un motivo para
-ello: Como sabemos los nombres definidos en una función (igual da que sean variables o nombres de argumentos) sobrescriben a las
+ello: como sabemos los nombres definidos en una función (igual da que sean variables o nombres de argumentos) sobrescriben a los
 existentes en el ámbito global con el mismo nombre, de esta manera estamos creando una copia local en nuestra función de los tres
-nombres que definimos como argumentos (`undefined` en Javascript es una variable sin valor definido, pero alguien podría asignarle
+nombres que definimos como argumentos (`undefined` en Javascript es una variable sin valor definido, con lo alguien podría asignarle
 uno), así si alguien los modifica nosotros no nos vemos afectados; al pasar como parámetros en la invocación los objetos globales
-tenemos una copia de los objetos globales, pero sin embargo `undefined` tiene el valor "*no definido*" que cabría esperar.
+tenemos una copia suya, sin embargo `undefined` tiene el valor "*no definido*" que cabría esperar al no estar el la lista de parámetros.
 
 ### Modo estricto
 
@@ -65,24 +66,28 @@ estricto en nuestra función y veamos que pasa.
 
 ¡Oooops!..., nuestro juego se ha roto. Como puedes ver todos los errores hacen referencia a que hay variables sin definir.
 
-Esto es debido a una vieja práctica, antiguamente las variavbles se podian usar sin definir. Para definir una variable se usaba
+Esto es debido a una vieja práctica, antiguamente las variables se podian usar sin definir. Para definir una variable se usaba
 la palabra reservada `var`, al hacer uso de ella la variable se definía en el scope correspondiente (dentro de función o global),
 pero si no se usaba `var`, automáticamente la variable se definía en el scope global, aunque se estuviera dentro de una función;
-esto ha sido motivo de innumerables errores. Con la versión 6 se sustituyó `var` por `let` y `const`, lo que hace que en *"modo
-estricto"* aparezca un error al no definir las variables o al modificar una variable definida con `const`. Todavía queda permitido
-el uso de `var`, pero se desaconseja su uso por los motivos ya mencionados.
+esto ha sido motivo de innumerables errores.
 
-Para poder eliminar todos los errores debes usar let en la definición de las variables contador de todos los bucles `for`, es
-decir, sustituir `for (i = 0;` por `for (let i = 0;` (Este error ha sido algo premeditado para resolverlo en este punto).
+Con la versión 6 se introdujeron `let` y `const` como sustitutos de `var`, `let` nos permite definir variables y `const`
+constantes, ambas trabajan con los nuevos scopes, mientras que var sólo soporta los scopes global y de función. Por este motivo
+en *"modo estricto"* aparece un error al no definir las variables (con `let` o `var`) o al modificar una constante definida con
+`const`. Todavía queda permitido el uso de `var`, pero se desaconseja su uso por los motivos ya mencionados.
+
+Para poder eliminar todos los errores debes usar `let` en la definición de las variables *contador* de todos los bucles `for`, es
+decir, sustituir `for (i = 0;` por `for (let i = 0;` (Este error ha sido algo premeditado para resolverlo en este punto). Aprovechamos
+también para reemplazar `var` por `const` o `let` en la sección de declaración de constantes y variables.
 
 ### Verificar recursos multimedia
 
 En nuestro juego usamos varios recursos multimedia (imágenes y audio), en el caso de las imágenes usamos una comparación contra
-`null` para decidir si tenemos pintamos la imagen o si usamos un color. Esto no es del todo correcto, ya que se pueden producir
-errores en la comunicación que impidan la descarga o no haberse descargado completamente el recurso en el momento de querer usarlo.
+`null` para decidir si pintamos la imagen o si usamos un color. Esto no es del todo correcto, ya que se pueden producir errores
+en la comunicación que impidan la descarga o no haberse descargado completamente el recurso en el momento de querer usarlo.
 
-En el caso de las imágenes la mejor manera de Verificar si el recurso está disponible es preguntar por la propiedad `Image.width`,
-si es mayor que `0` significa que la imagen está completa. Debemos cambiar el código del método `draw` por:
+En el caso de las imágenes la mejor manera de Verificar si el recurso está disponible es preguntar por la propiedad `width`, si
+es mayor que `0` significa que la imagen está completa. Debemos pues cambiar el código del método `draw` por:
 
 ``` javascript
   this.draw = function (ctx, bkgImg) {
@@ -146,20 +151,20 @@ Cabe destacar que `undefined`, más allá de un concepto es una variable, a la q
 ### Uso de prototipos
 
 JavaScript no posee *"clases"*, al menos no como las entendemos en los lenguajes orientados a objetos tradicionales (como Java,
-C++, ...), sólo tiene objetos, que son una agrupación de atributos y funciones definidos mediante una función *"constructor"*
-(como nuestra `Rectangle`). A partir de la versión 6 Javascript ya dispone de una sintaxis que simula las clases, pero sigue
+C++, ...), sólo tiene objetos, que son una agrupación de atributos, definidos mediante una función *"constructor"* (como nuestra
+`Rectangle`), y funciones. A partir de la versión 6 Javascript ya dispone de una sintaxis que simula las clases, pero sigue
 manteniendo el mismo mecanismo de objetos basado en *"prototipos"*, la veremos con más detalle en una sección posterior.
 
 En Javascript todo objeto tiene una propiedad (su *[[Prototype]]*) que comparte con todas las instancias de ese objeto y a la
 que podemos acceder mediante el atributo `prototype`. `prototype` es, a su vez, un objeto por lo que también tiene un atributo
-`prototype` lo que permite implementar una jerarquía de herencia. En la cabeza de esta jerarquía esta `Object` cuyo *"prototipo"*
+`prototype` esto nos permite implementar una jerarquía de herencia. En la cabeza de esta jerarquía esta `Object` cuyo *"prototipo"*
 es null.
 
 En las secciones anteriores hemos implementado nuestro objeto `Rectangle` asignando las funciones a atributos en la función
 constructora, este método tiene un problema, ya que cada objeto creado tiene una copia propia de cada función, lo que incrementa
 considerablemente el consumo de recursos (memoria RAM en este caso). Este problema puede solucionarse mediante el uso de los
 *"prototipos"*, al ser compartido por todas las instancias, si creamos las funciones el él, todas las instancias comparten la
-copia de la función.
+misma copia de la función.
 
 Para mejorar nuestra implementación de `Rectangle` vamos a usar *"prototipos"*, podemos hacerlo de dos maneras:
 
@@ -200,7 +205,7 @@ Crear las funciones directamente en el *"prototipo"* de `Rectangle`:
 ```
 
 Sobresecribir el *"prototipo"* de `Rectangle` con un nuevo objeto que contenga las funciones (en este caso deberemos incluir
-tambien una referencia para el cosntructor)
+tambien una referencia para el cosntructor):
 
 ``` javascript
   function Rectangle(x, y, color, width, height) {
@@ -240,13 +245,18 @@ tambien una referencia para el cosntructor)
   };
 ```
 
-En este segundo caso lo que estamos haciendo es sustituir completamente el *[[Prototype]]* y por lo tanto toda la jerarquía de herencia, en caso de haberla. También puedes notar que debemos asignar de nuevo el atributo `constructor` que se generaba automáticamente al definir la función constructor. Este formato es más compacto, pero puede introducir muchos fallos, así que debes ser cauteloso al usarlo.
-
-Para nuestro juego es seguro usarlo.
+En este segundo caso lo que estamos haciendo es sustituir completamente el *[[Prototype]]* y por lo tanto toda la jerarquía de
+herencia, en caso de haberla. También puedes notar que debemos asignar de nuevo el atributo `constructor` que se generaba
+automáticamente al definir la función constructor. Este formato es más compacto, pero puede introducir muchos fallos, así que
+debes ser cauteloso al usarlo. Para nuestro juego es seguro usarlo.
 
 ### Calidad de código con JSLint
 
-[JSLint](http://www.jslint.com/){:target="\_blank"} es una herramienta que pertenece a la familia de los *"linters"*, herramientas orientadas a la verificación de la correción del código y a la recomendación de buenas prácticas para el mismo sea legible y sencillo de comprender. Estos aspectos son especialmente importantes en proyectos grandess o colaborativos, por lo que resulta una buena práctica seguir estas recomendaciones desde el comienzo. Algunas herramientas de desarrollo web, como [Brackets](http://brackets.io/){:target="\_blank"}, ya lo incorporan por defecto.
+[JSLint](http://www.jslint.com/){:target="\_blank"} es una herramienta que pertenece a la familia de los *"linters"*, herramientas
+orientadas a la verificación de la correción del código y a la recomendación de buenas prácticas para que el mismo sea legible y
+sencillo de comprender. Estos aspectos son especialmente importantes en proyectos grandes o colaborativos, por lo que resulta
+una buena práctica seguir estas recomendaciones desde el comienzo. Algunas herramientas de desarrollo web, como [Brackets](http://brackets.io/){:target="\_blank"},
+ya lo incorporan por defecto.
 
 JSLint puede ser configurado mediante el uso de directrices de configuración escritas como comentarios al inicio del fichero de código, por ejemplo:
 
