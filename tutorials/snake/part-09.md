@@ -6,7 +6,7 @@
 ## Escenas
 
 Ahora que ya tenemos un juego con toda su funcionalidad y el código bien estructurado ha llegado el momento de añadirle detalles
-que lo hagan más atractivo. En esta sección vamos a ver como añadirle *"escenas"*, distintas pantallas para mostrar contenido
+que lo hagan más atractivo. En esta sección vamos a ver como añadir *"escenas"*, nuevas pantallas para mostrar contenido
 adicional al juego, como los créditos, ayuda,...
 
 Quizá la forma más sencilla de manejar escenas sea usar una variable donde recogemos la escena actual y una serie de condicionales
@@ -63,12 +63,17 @@ class Scene {
 
   // Initialize the scene variables needed to start the execution
   load() { }
+
   // Paint the elements of the scene using the provided graphics context
   paint(ctx) { throw new Error("Pending implementation"); }
+
   // Compute the next state for the game
   actions() { throw new Error("Pending implementation"); }
 
+  // The currently showing scene
   static Current;
+
+  // All the available scenes stored as a dictionary
   static Script = {};
 
   static ChangeScene(scene) {
@@ -97,10 +102,10 @@ instanciar, su propósito es definir un interfaz que debe ser implementado por l
 métodos están implementados, a veces, ninguno. El concepto de *"clase abstracta"* no existe en Javascript, así que esto es lo más
 parecido.
 
-El constructor recibe como parámetros una instancia del juego y el nombre de la escena, que usa para registrar la instancia de la
-clase que se está creando en el objeto `Script`, donde luego puede ser buscado por el método estático `ChangeScene` que invoca el
-método `load` de la escena seleccionada para prepararlo todo para la ejecución. Los métodos estáticos `paint` y `run` simplemente
-llaman al método homónimo de la escena actual tras comprobar que existe en el objeto `Script`.
+El constructor recibe como parámetros una instancia del juego y el nombre de la escena, este uĺtimo se usa para registrar la
+instancia de la clase que se está creando en el objeto `Script`, donde luego puede ser buscado por el método estático `ChangeScene`
+que, a su vez, invoca el método `load` de la escena seleccionada para prepararlo todo para la ejecución. Los métodos estáticos
+`paint` y `run` simplemente llaman al método homónimo de la escena actual tras comprobar que existe en el objeto `Script`.
 
 Todas las escenas de nuestro juego deben heredar de la clase `Scene` y proveer una implementación para, al menos, `paint` y `actions`.
 
@@ -114,7 +119,7 @@ correspondientes de la escena actual:
     }
 
     run() {
-      setTimeout(this.run.bind(this), 50);
+      setTimeout(this.run.bind(this), 40);
       Scene.actions();
     }
 ```
@@ -152,9 +157,9 @@ class MainMenuScene extends Scene {
 
   actions() {
     // Load next scene
-    if (this.game.lastPressed === KEY_ENTER) {
+    if (SnakeGame.lastKeyPressed === KEY_ENTER) {
       Scene.ChangeScene(SCENE_GAME);
-      this.game.lastPressed = null;
+      SnakeGame.lastKeyPressed = null;
     }
   }
 }
@@ -237,7 +242,7 @@ class GameScene extends Scene {
       }
 
       // Check direction
-      switch (this.lastPressed) {
+      switch (SnakeGame.lastKeyPressed) {
         case KEY_LEFT: this.movingDirection = MOVING_LEFT; break;
         case KEY_UP: this.movingDirection = MOVING_UP; break;
         case KEY_RIGHT: this.movingDirection = MOVING_RIGHT; break;
@@ -263,9 +268,9 @@ class GameScene extends Scene {
     }
 
     // Pause/Unpause
-    if (this.lastPressed == KEY_ENTER) {
+    if (SnakeGame.lastKeyPressed == KEY_ENTER) {
         this.pause = !this.pause;
-        this.lastPressed = null;
+        SnakeGame.lastKeyPressed = null;
     }
   }
 }
@@ -277,13 +282,14 @@ no tiene método `load`, el método `paint` escribe texto y `actions` cambia a l
 La escena del juego es bastante más complicada:
 
 - Su constructor, tras llamar al constructor de la clase `Scene`, incluye todo el código del constructor de `SnakeGame` excepto
-los atributos del contenedor y la última tecla pulsada, que deben quedarse en esa clase para estar disponibles en todas las escenas.
+los atributos del contenedor, que deben quedarse en esa clase para estar disponibles en todas las escenas.
 - Incluye los métodos `isPaused`, `isGameover` y `loadAssets` de `SnakeGame`.
 - El método `load` corresponde con el método `reset`, y `paint` y `actions` con sus homónimos de la clase `SnakeGame`.
 
-En ambas clases hay que usar la referencia a la instancia del juego para acceder a las dimensiones del contenedor.
+En ambas clases hay que usar la referencia a la instancia del juego para acceder a las dimensiones del contenedor y a la última
+tecla pulsada.
 
-Por ultimo debemos modificar la clase `SnakeGame` para que en su constructor cree los dos nuevos objetos y cambia a la escena inicial.
+Por ultimo debemos modificar la clase `SnakeGame` para que en su constructor cree los dos nuevos objetos y cambie a la escena inicial.
 
 ## Código final
 
