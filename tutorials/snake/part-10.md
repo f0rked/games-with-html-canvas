@@ -58,7 +58,7 @@ class HighScores {
 En el método `registerScore`, primero buscamos la posición del vector en la que insertar la nueva puntuación, puntuaciones más
 bajas en índices más altos; insertamos en la posición indicada mediante el uso del método `splice`, que modifica el contenido de
 un vector, en la posición dada por el primer parámetro, borra los elementos dados por el segundo e inserta los elementos del
-tercer y sucesivos parrámetros. Si la longitud final del vector excede el máximo de elementos borrramos el último y registramos
+tercer y sucesivos parámetros. Si la longitud final del vector excede el máximo de elementos borrramos el último y registramos
 la posición si realmente intertamos una nueva puntuación.
 
 Al guardar la lista debemos convertir el vector en una cadena de texto, el método `join` concatena los elementos del vector usando

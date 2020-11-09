@@ -151,8 +151,12 @@ class MainMenuScene extends Scene {
     // Draw title
     ctx.fillStyle = '#ffffff';
     ctx.textAlign = 'center';
-    ctx.fillText('SNAKE', this.game.getWidth() / 2, this.game.getHeight() / 2);
-    ctx.fillText('Press Enter', this.game.getWidth() / 2, this.game.getHeight() / 2 + 30);
+    ctx.fillText('SNAKE',
+                 this.game.getWidth() / 2,
+                 this.game.getHeight() / 2);
+    ctx.fillText('Press Enter',
+                 this.game.getWidth() / 2,
+                 this.game.getHeight() / 2 + 30);
   }
 
   actions() {
@@ -226,9 +230,13 @@ class GameScene extends Scene {
     if (this.isPaused()) {
         ctx.textAlign = 'center';
         if (this.isGameover()) {
-            ctx.fillText('GAME OVER', this.game.getWidth() / 2, this.game.getHeight() / 2);
+            ctx.fillText('GAME OVER',
+                         this.game.getWidth() / 2,
+                         this.game.getHeight() / 2);
         } else {
-            ctx.fillText('PAUSE', this.game.getWidth() / 2, this.game.getHeight() / 2);
+            ctx.fillText('PAUSE',
+                         this.game.getWidth() / 2,
+                         this.game.getHeight() / 2);
         }
         ctx.textAlign = 'left';
     }
@@ -250,7 +258,8 @@ class GameScene extends Scene {
       }
 
       // Move snake
-      this.snake.move(10, this.movingDirection, this.game.getWidth(), this.game.getHeight());
+      this.snake.move(10, this.movingDirection,
+                      this.game.getWidth(), this.game.getHeight());
 
       // Body Intersects
       if (this.snake.hasBitten()) {
