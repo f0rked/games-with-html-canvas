@@ -10,7 +10,7 @@
       link: part-02.html
     - name: Controlar el movimiento
       link: part-03.html
-    - name: Interacciones con elementos
+    - name: Interacción entre elementos
       link: part-04.html
     - name: El juego terminado
       link: part-05.html
@@ -18,7 +18,7 @@
       link: part-06.html
     - name: RequestAnimationFrame
       link: part-07.html
-    - name: Programación orientada a objetos
+    - name: Clases en Javascript
       link: part-08.html
     - name: Escenas
       link: part-09.html
