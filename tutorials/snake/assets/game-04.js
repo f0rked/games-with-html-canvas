@@ -1,23 +1,23 @@
-const GAME_CONTAINER = 'canvas';
-const KEY_UP = "ArrowUp",
-      KEY_RIGHT = "ArrowRight",
-      KEY_DOWN = "ArrowDown",
-      KEY_LEFT = "ArrowLeft";
-const KEY_ENTER = "Enter";
-const MOVING_UP = 0,
-      MOVING_RIGHT = 1,
-      MOVING_DOWN = 2,
-      MOVING_LEFT = 3;
+var GAME_CONTAINER = 'canvas';
+var KEY_UP = "ArrowUp",
+    KEY_RIGHT = "ArrowRight",
+    KEY_DOWN = "ArrowDown",
+    KEY_LEFT = "ArrowLeft";
+var KEY_ENTER = "Enter";
+var MOVING_UP = 0,
+    MOVING_RIGHT = 1,
+    MOVING_DOWN = 2,
+    MOVING_LEFT = 3;
 
-let canvas,
+var canvas,
     ctx;
-let player = null;
-let lastPressed = null;
-let movingDirection = MOVING_RIGHT;
-let pause = true;
-let food = null;
-let score = 0;
-let walls = new Array(),
+var player = null;
+var lastPressed = null;
+var movingDirection = MOVING_RIGHT;
+var pause = true;
+var food = null;
+var score = 0;
+var walls = new Array(),
     gameover = false;
 
 function Rectangle(x, y, color, width, height) {

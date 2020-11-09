@@ -34,7 +34,7 @@ En la sección de definición de variables añadimos la nueva variable (inicialm
 movimiento). Con esto completamos el segundo punto.
 
 ``` javascript
-let lastPressed = null;
+var lastPressed = null;
 ```
 
 Ahora ya podemos tomar decisiones en el juego en función de la tecla pulsada. Para tener una indicación visual de cuál es la
@@ -51,27 +51,27 @@ Para interactuar vamos a usar las teclas de cursor izquierda, arriba, derecha y 
 unas constantes al inicio de nuestro fichero de código:
 
 ``` javascript
-const KEY_UP = "ArrowUp",
-      KEY_RIGHT = "ArrowRight",
-      KEY_DOWN = "ArrowDown",
-      KEY_LEFT = "ArrowLeft";
+var KEY_UP = "ArrowUp",
+    KEY_RIGHT = "ArrowRight",
+    KEY_DOWN = "ArrowDown",
+    KEY_LEFT = "ArrowLeft";
 ```
 
 Aunque podríamos usar la variable `lastPressed` y estas constantes para gestionar el movimiento es mejor crear unas nuevas para
 tal fin, así que definimos una nueva variable:
 
 ``` javascript
-let movingDirection = null;
+var movingDirection = null;
 ```
 
 Esta variable puede tomar un valor emtre 0 y 3, indicando 0 hacia arriba y rotando en el sentido de las agujas del reloj para
 los demás valores. Creamos unas constantes con estos valores:
 
 ``` javascript
-const MOVING_UP = 0,
-      MOVING_RIGHT = 1,
-      MOVING_DOWN = 2,
-      MOVING_LEFT = 3;
+var MOVING_UP = 0,
+    MOVING_RIGHT = 1,
+    MOVING_DOWN = 2,
+    MOVING_LEFT = 3;
 ```
 
 A continuación vamos a separar la gestión del pintado y de las acciones. En el apartado anterior separamos el código en dos
@@ -155,14 +155,14 @@ manera indefinida. Vamos a ver como podemos parar y arrancar el movimiento.
 Creamos una variable donde almacenar el estado del juego, inicialmente el juego está en pausa:
 
 ``` javascript
-let pause = true;
+var pause = true;
 ```
 
 También definimos una constante con el valor de la tecla que vamos a usar para detectar que el jugador quiere activar/desactivar
 el modo pausa (la tecla *"Enter"*, por ejemplo):
 
 ``` javascript
-const KEY_ENTER = "Enter";
+var KEY_ENTER = "Enter";
 ```
 
 Con el juego en pausa el movimiento queda detenido, pero el contenido del juego debe seguir mostrándose en el mismo estado en el

@@ -1,8 +1,8 @@
-const GAME_CONTAINER = 'canvas';
+var GAME_CONTAINER = 'canvas';
 
-let canvas,
+var canvas,
     ctx;
-let x = 50,
+var x = 50,
     y = 50;
 
 function paint(ctx) {

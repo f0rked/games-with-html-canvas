@@ -17,7 +17,7 @@ manzanas que aparecen en el juego, para implementar este comportamiento vamos a 
 por otra llamada `snake`:
 
 ``` javascript
-let snake = new Array();
+var snake = new Array();
 ```
 
 En el código existente debemos sustituir cada referencia a `player` por `snake[0]`, la cabeza de la serpiente, por ejemplo, donde
@@ -126,7 +126,7 @@ junto al código del juego. En la sección [Recursos multimedia](#resources) pue
 Una vez que tenemos nuestros sprites listos creamos dos variables de tipo `Image`,
 
 ``` javascript
-let sectImg = new Image(),
+var sectImg = new Image(),
     foodImg = new Image();
 ```
 
@@ -170,7 +170,7 @@ puedes encontrar los sonidos usados en el tutorial.
 Creamos dos variables de tipo `Audio`,
 
 ``` javascript
-let eat = new Audio(),
+var eat = new Audio(),
     over = new Audio();
 ```
 

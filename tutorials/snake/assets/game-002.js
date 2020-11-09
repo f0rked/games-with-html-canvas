@@ -59,22 +59,22 @@ function runner(entries, observer) {
 }
 
 function init() {
-  let observer = new IntersectionObserver(runner,
-                                          {
-                                            rootMargin: '0px',
-                                            threshold: 0.5
-                                          });
+  observer = new IntersectionObserver(runner,
+                                      {
+                                        rootMargin: '0px',
+                                        threshold: 0.5
+                                      });
 
-  let game01 = new GamePanel("canvas01");
+  game01 = new GamePanel("canvas01");
   game01.actions = actions_wrong;
   game01.paint = paint_wrong;
   observer.observe(game01.element);
-  let game02 = new GamePanel("canvas02");
+  game02 = new GamePanel("canvas02");
   game02.actions = actions_wrong;
   game02.paint = paint;
   observer.observe(game02.element);
 
-  let game03 = new GamePanel("canvas03");
+  game03 = new GamePanel("canvas03");
   game03.actions = actions;
   game03.paint = paint;
   observer.observe(game03.element);

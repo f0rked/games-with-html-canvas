@@ -12,7 +12,7 @@ Comenzamos por declarar dos nuevas variables, `x` e `y`, para almacenar las coor
 el fichero de código, tras las variables ya existentes, las siguientes líneas:
 
 ``` javascript
-let x = 50,
+var x = 50,
     y = 50;
 ```
 
@@ -39,7 +39,7 @@ function run() {
 ```
 
 En la primera línea llamamos a `requestAnimationFrame`, una función del navegador usada para solicitar realizar una animación
-para el próximo ciclo de repintado de la ventana, y que recibe como parámetro una función a la que invoca antes del repintado 
+para el próximo ciclo de repintado de la ventana, y que recibe como parámetro una función a la que invoca antes del repintado
 del navegador. La frecuencia de los ciclos de animación suele ser de 60 veces por segundo para las pestañas activas. Veremos más
 al respecto en la sección [RequestAnimationFrame](./part-07.html).
 

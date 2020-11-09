@@ -57,9 +57,10 @@ fichero llamado `game.js` donde copiamos el siguiente contenido:
 
 Ahora vamos a analizar el código con detenimiento para entenderlo.
 
-Al principio tenemos la sección de declaración de constantes y variables, las palabras reservadas `const` y `let` nos permiten
-declararar constantes y variables respectivamente. Declaramos una constante con el identificador del contenedor y dos variables
-para almacenar las referencias al propio contenedor y a su contexto gráfico, que es el que usaremos realmente para dibujar.
+Al principio tenemos la sección de declaración de constantes y variables, la palabra reservada `var` sólo nos permite declarar
+variables (más adelante veremos como definir constantes), por lo que hay una norma que recomienda escribir los nombres de constantes
+en mayúsculas como aviso para no modificarlas. Declaramos una constante con el identificador del contenedor y dos variables para
+almacenar las referencias al propio contenedor y a su contexto gráfico, que es el que usaremos realmente para dibujar.
 
 A continuación definimos la funciones con el código para dibujar el contenido e inicializar el juego.
 

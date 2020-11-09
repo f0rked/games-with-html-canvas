@@ -77,7 +77,7 @@ Ahora haremos una serie de cambios en nuestro código para comenzar a usar nuest
 `x` e `y` por una nueva variable `player`,
 
 ``` javascript
-let player = null;
+var player = null;
 ```
 
 a la que asignaremos un valor de nuestro nuevo tipo al comienzo de la función `init`,
@@ -100,7 +100,7 @@ hicimos para llamar al método `draw` en la función `paint` (tranquilo, ya mejo
 Muy bien, ahora ha llegado el momento de añadir al juego un nuevo elemento con el que interactuar. Creamos una nueva variable,
 
 ``` javascript
-let food = null;
+var food = null;
 ```
 
 le asignamos valor dentro de la función `init`,
@@ -122,7 +122,7 @@ comerse la comida, sumamos un punto y recolocamos la comida en otro punto para v
 para la puntuación,
 
 ``` javascript
-let score = 0;
+var score = 0;
 ```
 
 una nueva función para ayudarnos en el cálculo de la nueva posición de la comida (genera un valor entre 0 y el valor que le
@@ -168,7 +168,7 @@ Como ejemplo para ver su uso vamos a añadir 4 elementos fijos, si el jugador ch
 Empezamos por crear una variable de tipo vector donde guardar los nuevos elementos y otra para indicar el final del juego,
 
 ``` javascript
-let walls = new Array(),
+var walls = new Array(),
     gameover = false;
 ```
 
