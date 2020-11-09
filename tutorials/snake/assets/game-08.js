@@ -1,17 +1,17 @@
-/*jshint esversion: 5*/
+/*jslint browser */
 (function (window, document, undefined) {
   "use strict";
 
-  const GAME_CONTAINER = "canvas",
-        KEY_LEFT = "ArrowLeft",
-        KEY_UP = "ArrowUp",
+  const GAME_CONTAINER = 'canvas';
+  const KEY_UP = "ArrowUp",
         KEY_RIGHT = "ArrowRight",
         KEY_DOWN = "ArrowDown",
-        MOVING_UP = 0,
+        KEY_LEFT = "ArrowLeft";
+  const KEY_ENTER = "Enter";
+  const MOVING_UP = 0,
         MOVING_RIGHT = 1,
         MOVING_DOWN = 2,
-        MOVING_LEFT = 3,
-        KEY_ENTER = "Enter";
+        MOVING_LEFT = 3;
   const ASSET_SNAKE_SECTION = "assets/sect.png",
         ASSET_FOOD = "assets/apple.png",
         ASSET_EAT = ["assets/eat.oga", "assets/eat.m4a"],
@@ -48,9 +48,9 @@
   }
 
   class SpriteRectangle extends Rectangle {
-    constructor(x, y, color, image, width, height) {
+    constructor(x, y, color, sprite, width, height) {
       super(x, y, color, width, height);
-      this.bkgImg = image
+      this.bkgImg = sprite;
     }
 
     draw(ctx) {
@@ -78,14 +78,15 @@
       this.headSprite = this.bodySprite = sprite;
       this.body = [];
 
-      this.reborn(x, y, direction)
+      this.reborn(x, y, direction);
     }
 
     reborn(x, y, direction) {
       this.body.length = 0;
 
       for (let i = 0; i < 3; i++) {
-        this.body.push(new SpriteRectangle(x, y, this.color, this.headSprite, this.width, this.height));
+        this.body.push(new SpriteRectangle(x, y, this.color, this.headSprite,
+                                           this.width, this.height));
         if (direction == MOVING_UP)
           y -= this.height;
         else if (direction == MOVING_DOWN)
@@ -105,11 +106,9 @@
 
     move(howMuch, direction, maxWidth, maxHeight) {
       // Move snake's body
-      if (direction != null) {
-        for (let i = this.body.length - 1; i > 0; i--) {
-          this.body[i].x = this.body[i - 1].x;
-          this.body[i].y = this.body[i - 1].y;
-        }
+      for (let i = this.body.length - 1; i > 0; i--) {
+        this.body[i].x = this.body[i - 1].x;
+        this.body[i].y = this.body[i - 1].y;
       }
 
       // Move snake's head
@@ -120,23 +119,24 @@
         case MOVING_LEFT: this.body[0].x -= howMuch; break;
       }
 
-      // Out screen
+      // Out screen management
       if (this.body[0].x < 0) {
-        this.body[0].x = maxWidth - howMuch;
-      } else if (this.body[0].x > maxWidth) {
+        this.body[0].x = maxWidth - this.width;
+      } else if (this.body[0].x >= maxWidth) {
         this.body[0].x = 0;
       }
 
       if (this.body[0].y < 0) {
-        this.body[0].y = maxHeight - howMuch;
-      } else if (this.body[0].y > maxHeight) {
+        this.body[0].y = maxHeight - this.height;
+      } else if (this.body[0].y >= maxHeight) {
         this.body[0].y = 0;
       }
     }
 
     hasEaten(food) {
       if (this.body[0].intersects(food)) {
-        this.body.push(new SpriteRectangle(0, 0, this.color, this.headSprite, this.width, this.height));
+        this.body.push(new SpriteRectangle(this.body[0].x, this.body[0].y, this.color,
+                                           this.headSprite, this.width, this.height));
         return true;
       }
       return false;
@@ -148,7 +148,6 @@
           return true;
         }
       }
-
     }
   }
 
@@ -158,7 +157,8 @@
 
       this.canvas = canvas;
       this.ctx = canvas.getContext('2d');
-      this.lastPressed = null;
+      this.ctx.width = this.canvas.width;
+      this.ctx.height = this.canvas.height;
       this.movingDirection = MOVING_RIGHT;
       this.pause = true;
       this.score = 0;
@@ -178,9 +178,9 @@
 
     getHeight() { return this.canvas.height; }
 
-    isPaused() { return this.pause ; }
+    isPaused() { return this.pause; }
 
-    isGameover() { return this.gameover ; }
+    isGameover() { return this.gameover; }
 
     loadAssets() {
       let audioFormat = ((new Audio()).canPlayType('audio/ogg') != '') ? 0 : 1;
@@ -194,44 +194,47 @@
       this.over = new Audio(ASSET_OVER[audioFormat]);
     }
 
-    paint(ctx) {
-      ctx.fillStyle = '#000000';
-      ctx.fillRect(0, 0, this.getWidth(), this.getHeight());
+    paint() {
+      // Clean the context for drawing the new frame
+      this.ctx.fillStyle = '#000000';
+      this.ctx.fillRect(0, 0, this.ctx.width, this.ctx.height);
 
       // Draw score
-      ctx.fillStyle = '#ffffff';
-      ctx.fillText('Score: ' + this.score, 0, 20);
+      this.ctx.fillStyle = '#ffffff';
+      this.ctx.fillText('Score: ' + this.score, 0, 20);
 
       // Draw snake
-      this.snake.draw(ctx);
+      this.snake.draw(this.ctx);
 
-      this.food.draw(ctx);
+      // Draw food
+      this.food.draw(this.ctx);
 
       // Draw pause or gameover caption
       if (this.isPaused()) {
-          ctx.textAlign = 'center';
-          if (this.isGameover()) {
-              ctx.fillText('GAME OVER', this.getWidth() / 2, this.getHeight() / 2);
-          } else {
-              ctx.fillText('PAUSE', this.getWidth() / 2, this.getHeight() / 2);
-          }
-          ctx.textAlign = 'left';
+        this.ctx.fillStyle = '#ffffff';
+        this.ctx.textAlign = 'center';
+        if (this.isGameover()) {
+          this.ctx.fillText('GAME OVER', this.ctx.width / 2, this.ctx.height / 2);
+        } else {
+          this.ctx.fillText('PAUSE', this.ctx.width / 2, this.ctx.height / 2);
+        }
+        this.ctx.textAlign = 'left';
       }
     }
 
     actions() {
       if (!this.isPaused()) {
-        // GameOver reset
+        // Gameover reset
         if (this.isGameover()) {
           this.reset();
         }
 
         // Check direction
-        switch (this.lastPressed) {
-          case KEY_LEFT: this.movingDirection = MOVING_LEFT; break;
+        switch (SnakeGame.lastKeyPressed) {
           case KEY_UP: this.movingDirection = MOVING_UP; break;
           case KEY_RIGHT: this.movingDirection = MOVING_RIGHT; break;
           case KEY_DOWN: this.movingDirection = MOVING_DOWN; break;
+          case KEY_LEFT: this.movingDirection = MOVING_LEFT; break;
         }
 
         // Move snake
@@ -239,9 +242,9 @@
 
         // Body Intersects
         if (this.snake.hasBitten()) {
-            this.over.play();
-            this.gameover = true;
-            this.pause = true;
+          this.over.play();
+          this.gameover = true;
+          this.pause = true;
         }
 
         // Food eaten
@@ -253,9 +256,9 @@
       }
 
       // Pause/Unpause
-      if (this.lastPressed == KEY_ENTER) {
+      if (SnakeGame.lastKeyPressed === KEY_ENTER) {
           this.pause = !this.pause;
-          this.lastPressed = null;
+          SnakeGame.lastKeyPressed = null;
       }
     }
 
@@ -266,45 +269,49 @@
       this.snake.reborn(300, 150, this.movingDirection);
 
       this.food.relocate(this.getWidth(), this.getHeight());
+
       this.gameover = false;
     }
 
     repaint() {
       window.requestAnimationFrame(this.repaint.bind(this));
-      this.paint(this.ctx);
+      this.paint();
     }
 
     run() {
-      setTimeout(this.run.bind(this), 50);
+      setTimeout(this.run.bind(this), 40);
       this.actions();
     }
 
-    keyHandler() {
-      if (this.lastPressed == KEY_LEFT && event.key == KEY_RIGHT) ;
-      else if (this.lastPressed == KEY_UP && event.key == KEY_DOWN) ;
-      else if (this.lastPressed == KEY_RIGHT && event.key == KEY_LEFT) ;
-      else if (this.lastPressed == KEY_DOWN && event.key == KEY_UP) ;
-      else
-        this.lastPressed = event.key;
+    static lastKeyPressed = null;
 
-      if (this.lastPressed == KEY_LEFT || this.lastPressed == KEY_UP || this.lastPressed == KEY_RIGHT || this.lastPressed == KEY_DOWN)
+    static keyHandler(event) {
+      if (SnakeGame.lastKeyPressed === KEY_LEFT && event.key === KEY_RIGHT) ;
+      else if (SnakeGame.lastKeyPressed === KEY_UP && event.key === KEY_DOWN) ;
+      else if (SnakeGame.lastKeyPressed === KEY_RIGHT && event.key === KEY_LEFT) ;
+      else if (SnakeGame.lastKeyPressed === KEY_DOWN && event.key === KEY_UP) ;
+      else
+        SnakeGame.lastKeyPressed = event.key;
+
+      if (SnakeGame.lastKeyPressed === KEY_UP ||
+          SnakeGame.lastKeyPressed === KEY_RIGHT ||
+          SnakeGame.lastKeyPressed === KEY_DOWN ||
+          SnakeGame.lastKeyPressed === KEY_LEFT)
         event.preventDefault();
     }
 
     static initialize() {
-
       window.snakeGame = new SnakeGame(document.getElementById(GAME_CONTAINER));
-
-      window.addEventListener("keydown", window.snakeGame.keyHandler.bind(window.snakeGame), false);
 
       window.snakeGame.run();
       window.snakeGame.repaint();
     }
 
-    static random(max) {
-      return Math.floor(Math.random() * max);
-    }
+    static random(max) { return Math.floor(Math.random() * max); }
   }
 
-  window.addEventListener("load", SnakeGame.initialize, false);
+  window.addEventListener('load', SnakeGame.initialize, false);
+  window.addEventListener("keydown",
+                          SnakeGame.keyHandler.bind(window.snakeGame),
+                          false);
 }(window, document));

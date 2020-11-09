@@ -10,12 +10,12 @@ son los atributos (conjunto de valores que identifican a cada objeto) y los mét
 objeto) que tendrán los objetos creados a partir de ella. Los *"objetos"* son cada una de las instancias, creadas a partir de una
 clase, que existen en un programa y con los que se puede interactuar.
 
-La herencia es una característica de las clases que nos permite definir nuevas clases en base a otra ya existente; de esta manera
+La herencia es una característica de las clases que nos permite definir una nueva clase en base a otra ya existente; de esta manera
 la nueva clase "hereda" los atributos y métodos de la clase original y puede sobreescribirlos si así lo desea.
 
 Como hemos dicho anteriormente en este tutorial Javascript no tiene el concepto de *"clase"*, sólo el de objeto y, para gestionar
 de manera eficiente los recursos, usa un mecanismo denominado *"prototipo"* que, además, permite implementar la herencia y que ha
-sido lo que hemos usado nosotros para desarrollar nuestro juego.
+sido lo que hemos usado para desarrollar nuestro juego.
 
 A partir de la versión 6 Javascript soporta una sintaxis que añade al lenguaje el concepto de *"clase"*, pero es sólo eso, una
 sintaxis, ya que por debajo el mecanismo es el mismo que anteriormente. Veamos como se define nuestro objeto `Rectangle` usando
@@ -59,7 +59,7 @@ para crear objetos de la clase (nuestra antigua función `Rectangle`) y los mét
 usar la palabra reservada `function`. Todo mucho más limpio y claro.
 
 Una cosa muy importante a tener en cuenta es que las declaraciones de clase deben efectuarse antes de que se referencien en el
-código, de no hacerlo asi se producirán errores al ejecutar el código.
+código, de no hacerlo asi se producirán errores al ejecutarlo.
 
 También es posible definir atributos y métodos estáticos, estos se pueden usar sin necesidad de crear objetos de esa clase y por
 tanto no pueden acceder a atributos o métodos no estáticos. En Javascript los métodos estáticos sólo se pueden llamar usando el
@@ -84,14 +84,13 @@ t.printInvalidVal();    // Error.
 Test.printInvalidVal(); // Escribe -1 en la consola.
 ```
 
-Por último vamos a ver como se usa la herencia en la nueva sintaxis. Con la sintaxis antigua para heredar se añadia el *"prototipo"*
+Por último vamos a ver como se usa la herencia en la nueva sintaxis. Con la sintaxis antigua para heredar se añadía el *"prototipo"*
 de la clase de la que queríamos heredar en la cadena de *"prototipos"* de la nueva clase. Con la nueva sintaxis simplemente usamos
 la palabra reservada `extends` y el nombre de la clase de la que queremos heredar después del nombre de nuestra clase, e invocamos
 al constructor de la clase en nuestro propio constructor mediante `super` para heredar sus atributos.
 
 `super` es un *alias* que nos permite hacer referencia a la clase padre, y podemos usarlo en otros métodos para llamar a métodos
-de la clase padre. De esta manera podemos sobreescribir los métodos de la clase de la que heredamos manteniendo su funcionalidad
-si lo necesitamos.
+de la clase padre. De esta manera podemos sobreescribir los métodos de la clase heredada manteniendo su funcionalidad si lo necesitamos.
 
 En nuestro programa, cuando introdujimos las imágenes, modificamos el método `draw` para añadirle un parámetro adicional con la
 imagen a dibujar, y si la imagen no estaba lista usábamos el color del objeto. Ahora podemos usar la herencia para crear una
@@ -107,7 +106,7 @@ class SpriteRectangle extends Rectangle {
 
   draw(ctx) {
     if (ctx != null) {
-      if (this.bkgImg != null && bkgImg.width > 0)
+      if (this.bkgImg != null && this.bkgImg.width > 0)
         ctx.drawImage(this.bkgImg, this.x, this.y)
       else
         super.draw(ctx)
@@ -136,83 +135,81 @@ que estamos usando. Las variables las iremos eliminando según las añadimos a l
 Usamos un array para las rutas de los archivos de audio para simplificar el cálculo de nuestra vieja función `initCompatibleAudio`
 cuando la integremos en su nueva clase.
 
-A continuación vienen las definiciones de nuestras clases básicas, `Rectangle` y `SpriteRectangle`, tal y como los hemos visto
-anteriormente. Modificamos el código para reemplazar los objetos `Rectangle` por los `ImageRectangle` y eliminamos el segundo
+A continuación copiamos las definiciones de nuestras clases básicas, `Rectangle` y `SpriteRectangle`, tal y como los hemos visto
+anteriormente. Modificamos el código para reemplazar los objetos `Rectangle` por `SpriteRectangle` y eliminamos el segundo
 argumento en las llamadas al método `draw`.
 
-Añadimos una nueva clase para representar la comida en el juego, `Food`, esta clase extiende a `SpriteRectangle` sólo tiene un
+Añadimos una nueva clase para representar la comida en el juego, `Food`, esta clase extiende a `SpriteRectangle` y sólo tiene un
 método, `relocate`, que nos servirá para recolocar la comida en el tablero, recibe dos parámetros con el ancho y alto del contenedor
-y usa la función `random` para calcular las nuevas coordenadas. El constructor es el mismo que el de. Sustituye el código antiguo
-por el nuevo usando usando la clase.
+y usa la función `random` para calcular las nuevas coordenadas. No tiene constructor, así que usará el de la clase padre. En la
+creación del objeto comida sustituye el nombre de la clase `SpriteRectangle` por esta nueva.
 
 Ahora viene la clase para la serpiente, `Snake`, casi todo el código es el mismo que antes, sólo hay que adaptarlo para introducirlo
 dentro de una clase, vamos a ver sus métodos:
 
 - Su constructor recibe la posición inicial, alto y ancho, el color y el sprite a usar para dibujar, el cuerpo. Tiene un atributo
-para cada uno de los últimos cuatro valores, que son los que necesitaremos durante la vida del juego, más un vector para el
-cuerpo, al final llama al método `reborn` para posicionar la serpiente.
-- `reborn` coloca las secciones del cuerpo al principio del juego, recibe las coordenadas de la cabeza y la dirección inicial, el
+para cada uno de los últimos cuatro valores, son los que vamos necesitar durante la vida del juego, más un vector para el cuerpo,
+al final llama al método `reborn` para posicionar la serpiente.
+- `reborn` coloca las secciones del cuerpo al crear la serpiente, recibe las coordenadas de la cabeza y la dirección inicial, el
 código es equivalente al antiguo, pero usamos un bucle porque ahora la dirección es variable.
 - `draw` contiene el mismo código de pintado ya existente.
 - `move` contiene el código de movimiento del cuerpo (el mismo), la cabeza y el control de límites. Como parámetros necesitamos
-la distancia que queremos mover, la dirección y las dimensiones del contenedor.
-- `hasBitten` devuelve `true` si el cuerpo ha chocado o `false` en caso contrario. El código existente para la detección de
-colisión del cuerpo,
+la distancia que queremos mover, la dirección y las dimensiones del contenedor donde nos movemos para el cálculo de límites.
+- `hasBitten` devuelve `true` si el cuerpo ha chocado o `false` en caso contrario. Contiene el código existente para la detección
+de colisión del cuerpo,
 - `hasEaten` devuelve `true` si la cabeza ha chocado con la comida recibida como parámetro o `false` en caso contrario.
 
 Una vez creada la clase debes sustituir el código antiguo por las llamadas a los métodos correspondientes de la clase `Snake`.
 
 Por último la clase `SnakeGame`, esta clase tiene como atributos el resto de variables que quedan y como métodos las funciones
-principales del juego. Algunas de estos métodos se definen como *estáticos*, ya que no necesitan de una instancia del juego.
-Veámoslas una a una:
+principales del juego. Algunos de estos métodos se definen como *estáticos*, ya que no necesitan de una instancia del juego. Vamos
+a verlos uno a uno:
 
-- `constructor` recibe como parámetro el contenedor e inicializa sus atributos, carga los assets mediante el método `loadAssets`
-y crea una instacia de la serpiente y la comida.
+- `constructor` recibe como parámetro el contenedor e inicializa sus propios atributos, carga los assets mediante el método
+`loadAssets` y crea una instacia de la serpiente y la comida.
 - `getWidth`, `getHeight`, `isPaused` y `isGameover` son métodos auxiliares (llamados *getters* en programación orientada a objetos)
 que permiten exponer atributos ocultando la implementación dentro del objeto, si se cambia la implementación no cambia el interfaz
 de la clase. Retornan, respectivamente, el ancho y alto del tablero del juego y si este está pausado o finalizado.
 - `loadAssets` se encarga de crear los recursos multimedia (antigua `initCompatibleAudio`), para ello crea las variables para las
 imágenes y el audio y les asigna las URLs que tenemos definidas como constantes.
+  ``` javascript
+      loadAssets() {
+        let audioFormat = ((new Audio()).canPlayType('audio/ogg') != '') ? 0 : 1;
 
-``` javascript
-    loadAssets() {
-      let audioFormat = ((new Audio()).canPlayType('audio/ogg') != '') ? 0 : 1;
+        this.sectImg = new Image();
+        this.foodImg = new Image();
+        this.sectImg.src = ASSET_SNAKE_SECTION;
+        this.foodImg.src = ASSET_FOOD;
 
-      this.sectImg = new Image();
-      this.foodImg = new Image();
-      this.sectImg.src = ASSET_SNAKE_SECTION;
-      this.foodImg.src = ASSET_FOOD;
-
-      this.eat = new Audio(ASSET_EAT[audioFormat]);
-      this.over = new Audio(ASSET_OVER[audioFormat]);
-    }
-```
-
-En el caso del audio expresamos el soporte del navegador para los formatos como un número con valores `0` ó `1` que luego usamos
-como índice para seleccionar la URL adecuada.
+        this.eat = new Audio(ASSET_EAT[audioFormat]);
+        this.over = new Audio(ASSET_OVER[audioFormat]);
+      }
+  ```
+  En el caso del audio expresamos el soporte del navegador para los formatos como un número con valores `0` ó `1` que luego usamos
+  como índice para seleccionar la URL adecuada.
 - `paint`, `actions` y `reset` contienen el mismo código que antes, pero adaptado al nuevo escenario de clases.
-- `repaint` y `run` estos métodos, aunque son una copia de las antiguas funciones, merecen un comentario aparte para explicar un
-aspecto importante de los objetos en Javascript. Como podrás ver, cuando registramos la siguiente ejecución, no pasamos simplemente
-la función sino que llamamos al método `bind` de la clase `Function` de Javascript.
-``` javascript
-  window.requestAnimationFrame(this.repaint.bind(this));
-```
-En Javascript, el objeto (el valor de `this`) al que está asociado un método se calcula en tiempo de ejecución y en función del
-contexto en el que se llama al método. Cuando pasemos a la función `requestAnimationFrame` un método, esta lo almacena para su
+- `repaint` y `run` aunque estos métodos son una copia de las antiguas funciones, merecen un comentario aparte para explicar un
+aspecto importante de los objetos en Javascript. Como podrás ver, cuando registramos la función para la siguiente ejecución, no
+pasamos simplemente la función sino que llamamos al método `bind` de la clase `Function` de Javascript.
+  ``` javascript
+    window.requestAnimationFrame(this.repaint.bind(this));
+  ```
+En Javascript, el objeto al que está asociado un método (el valor de `this`) se calcula en tiempo de ejecución y en función del
+contexto en el que se llama al método. Cuando pasamos a la función `requestAnimationFrame` un método, esta lo almacena para su
 posterior ejecución. Este almacenamiento hace que el contexto de la función cambie y, por tanto, se pierde la referencia al objeto
 original, con lo que al ejecutarse posteriormente no tiene acceso a los atributos y métodos del objeto y falla. Para solucionar
-esto, antíguamente, en vez de pasar directamente el método se creaba una función auxiliar que contenía el valor del objeto en otra
+esto, antiguamente, en vez de pasar directamente el método se creaba una función anónima que contenía el valor del objeto en otra
 variable (esto se denomina closure, tienes más información en la home):
 ``` javascript
   let that = this;
   window.requestAnimationFrame(function() { that.repaint(); });
 ```
-A partir de la versión 5 se añadió a la clase `Function` el método `bind` que simplifica esto. A parte del objeto, permite pasar
-más parámetros para la función.
+A partir de la versión 5 se añadió a la clase `Function` el método `bind` que simplifica esto. A parte de la referencia del objeto,
+permite pasar más parámetros para la función.
 - `keyHandler` este método podría haberse definido como estático (haciendo el atributo `lastPressed` también estático) pero no lo
-he hecho porque así refuerza la idea de que su lógica sólo tienen sentido si existe un juego ejecutándose.
+he hecho porque así refuerza la idea de que su lógica sólo tiene sentido si existe un juego ejecutándose.
 - `initialize` la antigua función `init` reconvertida en metodo estático, se encarga de instanciar el juego, registrar el manejador
-de las teclas y de iniciar los ciclos de acciones y repintado. En este caso el médodo `keyHandler` es asociado con la instancias
+de las teclas y de iniciar los ciclos de acciones y repintado. En este caso el médodo `keyHandler` es asociado con la instancia
 del juego, y no con `this` ya que estamos en un método estático.
 - `random` la antigua función reconvertida en metodo estático.
 
