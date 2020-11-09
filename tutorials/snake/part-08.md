@@ -206,11 +206,10 @@ variable (esto se denomina closure, tienes más información en la home):
 ```
 A partir de la versión 5 se añadió a la clase `Function` el método `bind` que simplifica esto. A parte de la referencia del objeto,
 permite pasar más parámetros para la función.
-- `keyHandler` este método podría haberse definido como estático (haciendo el atributo `lastPressed` también estático) pero no lo
-he hecho porque así refuerza la idea de que su lógica sólo tiene sentido si existe un juego ejecutándose.
-- `initialize` la antigua función `init` reconvertida en metodo estático, se encarga de instanciar el juego, registrar el manejador
-de las teclas y de iniciar los ciclos de acciones y repintado. En este caso el médodo `keyHandler` es asociado con la instancia
-del juego, y no con `this` ya que estamos en un método estático.
+- `keyHandler` función anónima de gestión de teclado como método estático (convertimos también la variable `lastPressed` en el
+atributo estático `lastKeyPressed`).
+- `initialize` la antigua función `init` reconvertida en metodo estático, se encarga de instanciar el juego e iniciar los ciclos
+de acciones y repintado.
 - `random` la antigua función reconvertida en metodo estático.
 
 ## Código final
