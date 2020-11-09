@@ -16,7 +16,7 @@ computadoras normales), mejorando las capacidades de procesado para animaciones,
 la ejecución si la aplicación no está activa.
 
 Para usar la función `requestAnimationFrame` sólo tienes que invocarla al principio de otra función, pasando como argumento la
-propia función invocante para que sea llamada posteriormente, antes de realizar las acciones requeridas.
+propia función invocante para que sea llamada posteriormente.
 
 ``` javascript
 function run() {
@@ -60,7 +60,7 @@ capaz nuestra computadora:
 
 ``` javascript
 window.fpsCalculator = {
-  lastTime: Date.now(),
+  lastTime: 0,
   fps: 0,
   frames: 0,
   acumDelta: 0,
@@ -76,7 +76,7 @@ window.fpsCalculator = {
     this.acumDelta += delta;
 
     if (this.acumDelta > 1) {
-      this.fps = frames:
+      this.fps = this.frames;
       this.frames = 0;
       this.acumDelta -= 1;
     }
@@ -84,7 +84,8 @@ window.fpsCalculator = {
 };
 ```
 Para ver este objeto en funcionamiento vamos a partir del código de la sección [Introducir animación](part-02.html) e introducimos
-nuestro objeto para mostrar en el juego los fps:
+nuestro objeto para mostrar en el juego los fps, una llamada a la función `update` en la función `run` y también un texto para
+mostrar el valor en la función `paint`.
 
 ``` javascript
 {% include_relative assets/game-07.js %}
@@ -94,7 +95,7 @@ nuestro objeto para mostrar en el juego los fps:
   <script type="application/javascript" src="assets/game-07.js"></script>
   <canvas id="canvas" width="600" height="300" style="background:#999">[Canvas not supported by your browser.]</canvas>
 </div>
-
+<div>&nbsp;</div>
 ### Regulando el tiempo entre dispositivos
 
 Debido a la diferencia de capacidades entre dispositivos `requestAnimationFrame` no es consistente entre ellos, su tiempo de
@@ -145,7 +146,8 @@ El valor del incremento de tiempo es el calculado en el punto anterior (`delta =
 multiplicación es el número de píxeles que queremos mover en un segundo a los fps que queremos, es decir, si queremos mover 2
 píxeles por ciclo a una frecuencia de 60 fps entonces el desplazamiento por segundo es de `2 * 60 = 120`.
 
-Una vez calculados estos valores, en cada ejecución de la función el desplazamiento correspondiente sería `x += 120 * delta`.
+Una vez calculados estos valores, en cada ejecución de la función el desplazamiento correspondiente sería `x += 120 * delta`. Lo
+más sencillo es hacer el cálculo en la función `run` y pasar `delta` como parámetro a la función `actions`.
 
 Hay que tener en cuenta que este cálculo es necesario realizarlo para cada movimiento y animación para poder garantizar la
 consistencia, así que en juegos con muchas interacciones puede ser complicado de implementar. Aún así es el más efectivo.

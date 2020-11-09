@@ -20,6 +20,7 @@ window.fpsCalculator = {
     this.lastTime = now;
     this.frames++;
     this.acumDelta += delta;
+
     if (this.acumDelta > 1) {
       this.fps = this.frames;
       this.frames = 0;
@@ -29,8 +30,9 @@ window.fpsCalculator = {
 };
 
 function paint(ctx) {
+  // Clean the context for drawing the new frame
   ctx.fillStyle = '#000000';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillRect(0, 0, ctx.width, ctx.height);
 
   ctx.fillStyle = '#00ff00';
   ctx.fillRect(x, y, 10, 10);
@@ -42,7 +44,7 @@ function paint(ctx) {
 function actions() {
   x += 2;
 
-  if (x > canvas.width) {
+  if (x >= canvas.width) {
     x = 0;
   }
 }
@@ -57,6 +59,8 @@ function run() {
 function init() {
   canvas = document.getElementById(GAME_CONTAINER);
   ctx = canvas.getContext('2d');
+  ctx.width = canvas.width;
+  ctx.height = canvas.height;
 
   run();
 }
