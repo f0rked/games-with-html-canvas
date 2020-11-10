@@ -5,4 +5,5 @@ de ayuda y lo encontréis interesante y educativo.
 
 Estos tutoriales están dedicados a mi hijo Guille, que quiere aprender a desarrollar juegos. ¡¡¡Animo!!!
 
-Licenciado bajo los términos de [Creative Commons](https://creativecommons.org/) Atribución-CompartirIgual 4.0 Internacional ([CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)).
+Licenciado bajo los términos de [Creative Commons](https://creativecommons.org/) Atribución-CompartirIgual 4.0 Internacional ([CC BY-SA 4.0](
+https://creativecommons.org/licenses/by-sa/4.0/deed.es_ES)).
