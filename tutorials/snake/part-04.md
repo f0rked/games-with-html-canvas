@@ -3,7 +3,7 @@
   id: snake
 ---
 
-## Interacciones entre elementos
+## Interacción entre elementos
 
 En este punto ya podemos interactuar con el juego usando el teclado, pero otro punto importante es que los distintos elementos
 del juego puedan interactuar entre sí. Las interacciones entre elementos del juego suelen ser, principalmente, contactos y para

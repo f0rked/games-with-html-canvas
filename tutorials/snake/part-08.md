@@ -3,7 +3,7 @@
   id: snake
 ---
 
-## Programación orientada a objetos
+## Clases en Javascript
 
 En programación se llama *"clase"* a una *"plantilla"* a partir de la cual se pueden crear objetos, esta plantilla define cuales
 son los atributos (conjunto de valores que identifican a cada objeto) y los métodos (funciones que permiten interactuar con el
